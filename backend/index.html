@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignalScope Image Verification</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f4f6;
+            padding: 40px 20px;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #111827;
+        }
+
+        .form-group {
+            margin: 20px 0;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #4b5563;
+        }
+
+        input[type="file"],
+        select {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* New Button Styles for Copy Features */
+        .copy-btn {
+            background-color: #4b5563;
+            width: auto;
+            padding: 6px 12px;
+            font-size: 13px;
+            margin-right: 15px;
+        }
+
+        .copy-btn:hover {
+            background-color: #374151;
+        }
+
+        .copy-all-btn {
+            background-color: #10b981;
+            margin-top: 20px;
+            display: none;
+            /* Hidden until results load */
+        }
+
+        .copy-all-btn:hover {
+            background-color: #059669;
+        }
+
+        #resultsContainer {
+            margin-top: 20px;
+        }
+
+        .result-section {
+            margin-bottom: 25px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+
+        /* Collapsible Header Styles */
+        .result-header {
+            background-color: #f9fafb;
+            padding: 12px 15px;
+            font-weight: bold;
+            border-bottom: 1px solid #e5e7eb;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background-color 0.2s;
+        }
+
+        .result-header:hover {
+            background-color: #f3f4f6;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-icon {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        /* Styles applied when a section is collapsed */
+        .result-section.collapsed .result-box {
+            display: none;
+        }
+
+        .result-section.collapsed .result-header {
+            border-bottom: none;
+        }
+
+        .result-section.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        /* JSON Syntax Highlighting Styles */
+        .result-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .json-key {
+            color: #9cdcfe;
+        }
+
+        .json-string {
+            color: #ce9178;
+        }
+
+        .json-number {
+            color: #b5cea8;
+        }
+
+        .json-boolean {
+            color: #569cd6;
+        }
+
+        .json-null {
+            color: #569cd6;
+            font-style: italic;
+        }
+
+        .status-msg {
+            text-align: center;
+            font-weight: bold;
+            color: #2563eb;
+            margin-top: 20px;
+        }
+
+        .error-text {
+            color: #ef4444 !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>SignalScope Image Validator</h2>
+        <p>Upload an image and select the type of verification to perform.</p>
+
+        <div class="form-group">
+            <label for="imageInput">1. Select Image:</label>
+            <input type="file" id="imageInput" accept="image/*">
+
+            <label for="verifyType">2. Select Verification Type:</label>
+            <select id="verifyType">
+                <option value="/api/verify/">Run All Checks (Comprehensive)</option>
+                <option value="/api/verify/c2pa/">C2PA Provenance Only</option>
+                <option value="/api/verify/metadata/">EXIF & Metadata Only</option>
+                <option value="/api/verify/forensic/">Forensic Analysis Only</option>
+                <option value="/api/verify/model/">AI Detection Model Only</option>
+            </select>
+        </div>
+
+        <button onclick="verifyImage()">Upload & Verify</button>
+
+        <div id="statusMessage" class="status-msg"></div>
+
+        <!-- Global Copy All Button -->
+        <button id="copyAllBtn" class="copy-all-btn" onclick="copyAllResults()">Copy All Results</button>
+
+        <!-- Results will be dynamically injected here -->
+        <div id="resultsContainer"></div>
+    </div>
+
+    <script>
+        // Store current results for the "Copy All" functionality
+        let currentLoadedResults = [];
+
+        async function verifyImage() {
+            const fileInput = document.getElementById('imageInput');
+            const verifyType = document.getElementById('verifyType').value;
+            const resultsContainer = document.getElementById('resultsContainer');
+            const statusMessage = document.getElementById('statusMessage');
+            const copyAllBtn = document.getElementById('copyAllBtn');
+
+            if (fileInput.files.length === 0) {
+                alert("Please select an image first!");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+
+            // Reset UI for loading state
+            resultsContainer.innerHTML = '';
+            currentLoadedResults = [];
+            copyAllBtn.style.display = 'none';
+            statusMessage.classList.remove("error-text");
+            statusMessage.textContent = "Uploading and verifying... Please wait.";
+
+            try {
+                // Dynamically use the selected endpoint
+                const response = await fetch(`http://127.0.0.1:8001${verifyType}`, {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                statusMessage.textContent = "Verification Complete for: " + (data.filename || "Uploaded Image");
+
+                // Process Results
+                if (data.results) {
+                    for (const [key, value] of Object.entries(data.results)) {
+                        const title = `${key} Analysis`;
+                        createResultBox(title, value);
+                        currentLoadedResults.push({ title: title, data: value });
+                    }
+                }
+                else if (data.verification_type) {
+                    const title = `${data.verification_type} Analysis`;
+                    createResultBox(title, data.result);
+                    currentLoadedResults.push({ title: title, data: data.result });
+                }
+                else {
+                    createResultBox("API Output", data);
+                    currentLoadedResults.push({ title: "API Output", data: data });
+                }
+
+                // Show "Copy All" button if there are results
+                if (currentLoadedResults.length > 0) {
+                    copyAllBtn.style.display = 'block';
+                }
+
+            } catch (error) {
+                statusMessage.classList.add("error-text");
+                statusMessage.textContent = "Error connecting to API.";
+
+                const errData = {
+                    "message": error.message,
+                    "tip": "Make sure your FastAPI server is running on port 8000 and CORS is enabled."
+                };
+                createResultBox("Error Details", errData);
+                currentLoadedResults.push({ title: "Error Details", data: errData });
+                copyAllBtn.style.display = 'block';
+            }
+        }
+
+        // Global Copy Function
+        function copyAllResults() {
+            if (currentLoadedResults.length === 0) return;
+
+            let formattedText = "";
+            currentLoadedResults.forEach(item => {
+                formattedText += `=== ${item.title} ===\n`;
+                formattedText += JSON.stringify(item.data, null, 2);
+                formattedText += "\n\n";
+            });
+
+            navigator.clipboard.writeText(formattedText.trim()).then(() => {
+                const btn = document.getElementById('copyAllBtn');
+                const originalText = btn.textContent;
+                btn.textContent = "All Results Copied!";
+                setTimeout(() => btn.textContent = originalText, 2500);
+            });
+        }
+
+        // Helper function to colorize JSON output
+        function syntaxHighlight(json) {
+            if (typeof json != 'string') {
+                json = JSON.stringify(json, undefined, 2);
+            }
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                var cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'json-null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+
+        // Helper function to create collapsible UI boxes for JSON data
+        function createResultBox(title, jsonData) {
+            const resultsContainer = document.getElementById('resultsContainer');
+
+            const section = document.createElement('div');
+            section.className = 'result-section';
+
+            const header = document.createElement('div');
+            header.className = 'result-header';
+
+            const titleText = document.createElement('span');
+            titleText.textContent = title;
+
+            // Actions wrapper for Copy Button + Arrow Icon
+            const headerActions = document.createElement('div');
+            headerActions.className = 'header-actions';
+
+            // Individual Copy Button
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-btn';
+            copyBtn.textContent = 'Copy';
+            copyBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevents the header from collapsing when clicking copy
+                const textToCopy = JSON.stringify(jsonData, null, 2);
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    copyBtn.textContent = 'Copied!';
+                    setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+                });
+            });
+
+            const icon = document.createElement('span');
+            icon.className = 'toggle-icon';
+            icon.innerHTML = '&#9660;'; // Downward arrow ▼
+
+            headerActions.appendChild(copyBtn);
+            headerActions.appendChild(icon);
+
+            header.appendChild(titleText);
+            header.appendChild(headerActions);
+
+            // Click event to toggle 'collapsed' class
+            header.addEventListener('click', () => {
+                section.classList.toggle('collapsed');
+            });
+
+            section.appendChild(header);
+
+            // Preformatted JSON body
+            const pre = document.createElement('pre');
+            pre.className = 'result-box';
+            pre.innerHTML = syntaxHighlight(jsonData);
+
+            section.appendChild(pre);
+            resultsContainer.appendChild(section);
+        }
+    </script>
+
+</body>
+
+</html>

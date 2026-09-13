@@ -7,7 +7,6 @@ import os
 import traceback
 import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
 
 from PIL import Image
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
@@ -17,275 +16,126 @@ from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 # 1. CONFIGURATION
 # ============================================================
 
-MODEL_PATH = r"C:\Users\akshar Patel\signalscope\MODEL\mobilenetv2_v1.keras"
+MODEL_DIR = os.path.dirname(os.path.abspath(__file__))
 
-IMAGE_PATH = r"C:\Users\akshar Patel\Downloads\4.jpg"
+# Try multiple model file candidates in priority order
+_MODEL_CANDIDATES = [
+    os.path.join(MODEL_DIR, "mobilenetv2_final.keras"),
+    os.path.join(MODEL_DIR, "mobilenetv2_v1.keras"),
+]
+
+MODEL_PATH = None
+for _candidate in _MODEL_CANDIDATES:
+    if os.path.exists(_candidate):
+        MODEL_PATH = _candidate
+        break
+
+if MODEL_PATH is None:
+    raise FileNotFoundError(
+        f"\nNo model file found in: {MODEL_DIR}\n"
+        f"Looked for: {_MODEL_CANDIDATES}"
+    )
 
 THRESHOLD = 0.50
 
 
 # ============================================================
-# 2. HEADER
+# 2. LOAD MODEL (SINGLETON - LOADED ONCE AT IMPORT)
 # ============================================================
 
 print("=" * 60)
-print("SIGNALSCOPE IMAGE ANALYSIS")
+print("SIGNALSCOPE - Loading AI Detection Model")
 print("=" * 60)
 
+print(f"\nModel file: {MODEL_PATH}")
+print("Loading model...")
 
-# ============================================================
-# 3. LOAD MODEL
-# ============================================================
-
-if not os.path.exists(MODEL_PATH):
-    raise FileNotFoundError(
-        f"\nModel not found:\n{MODEL_PATH}"
-    )
-
-print("\nLoading model...")
-
-model = tf.keras.models.load_model(
+_model = tf.keras.models.load_model(
     MODEL_PATH,
     compile=False
 )
 
 print("Model loaded successfully!")
-print("Model:", MODEL_PATH)
 
 
 # ============================================================
-# 4. MODEL INFORMATION
+# 3. FIND TARGET GRAD-CAM LAYER (ONCE AT IMPORT)
 # ============================================================
 
-print("\nModel input:")
-print(model.input)
+def _find_target_layer(model):
+    """
+    Finds the last valid 4D convolutional layer
+    for Grad-CAM visualization.
+    """
 
-print("\nModel output:")
-print(model.output)
+    conv_layers = []
+
+    for layer in model.layers:
+
+        class_name = layer.__class__.__name__.lower()
+        layer_name = layer.name.lower()
+
+        if (
+            "conv2d" in class_name
+            or "depthwiseconv2d" in class_name
+            or "conv" in layer_name
+        ):
+
+            conv_layers.append(layer)
+
+    if len(conv_layers) == 0:
+        return None
+
+    # Select last valid 4D convolutional layer
+    for layer in reversed(conv_layers):
+
+        try:
+
+            output_shape = layer.output.shape
+
+            if len(output_shape) == 4:
+                return layer
+
+        except Exception:
+            continue
+
+    return None
 
 
-# ============================================================
-# 5. FIND CONVOLUTIONAL LAYERS
-# ============================================================
+_target_layer = _find_target_layer(_model)
 
-print("\nSearching convolutional layers...")
-
-conv_layers = []
-
-for layer in model.layers:
-
-    class_name = layer.__class__.__name__.lower()
-    layer_name = layer.name.lower()
-
-    if (
-        "conv2d" in class_name
-        or "depthwiseconv2d" in class_name
-        or "conv" in layer_name
-    ):
-
-        conv_layers.append(layer)
-
-
-print(
-    f"Found {len(conv_layers)} convolution-related layers."
-)
-
-
-if len(conv_layers) == 0:
-
-    raise ValueError(
-        "No convolutional layers found in the model."
-    )
-
-
-print("\nLast convolutional layers:")
-
-for layer in conv_layers[-10:]:
-
+if _target_layer is not None:
     print(
-        f"{layer.name:40s} "
-        f"{layer.__class__.__name__}"
+        f"Grad-CAM target layer: {_target_layer.name}"
     )
-
-
-# ============================================================
-# 6. SELECT LAST VALID 4D CONVOLUTIONAL LAYER
-# ============================================================
-
-target_layer = None
-
-for layer in reversed(conv_layers):
-
-    try:
-
-        output_shape = layer.output.shape
-
-        if len(output_shape) == 4:
-
-            target_layer = layer
-
-            break
-
-    except Exception:
-
-        continue
-
-
-if target_layer is None:
-
-    raise ValueError(
-        "Could not find a suitable 4D convolutional layer."
-    )
-
-
-print(
-    "\nSelected Grad-CAM layer:",
-    target_layer.name
-)
-
-print(
-    "Layer output shape:",
-    target_layer.output.shape
-)
-
-
-# ============================================================
-# 7. CHECK IMAGE
-# ============================================================
-
-if not os.path.exists(IMAGE_PATH):
-
-    raise FileNotFoundError(
-        f"\nImage not found:\n{IMAGE_PATH}"
-    )
-
-print("\nImage found:")
-print(IMAGE_PATH)
-
-
-# ============================================================
-# 8. LOAD ORIGINAL IMAGE
-# ============================================================
-
-original_image = Image.open(
-    IMAGE_PATH
-).convert("RGB")
-
-print(
-    "Original size:",
-    original_image.size
-)
-
-
-# ============================================================
-# 9. PREPARE IMAGE
-# ============================================================
-
-image = original_image.resize(
-    (224, 224)
-)
-
-image_array = np.asarray(
-    image,
-    dtype=np.float32
-)
-
-image_array = np.expand_dims(
-    image_array,
-    axis=0
-)
-
-image_array = preprocess_input(
-    image_array
-)
-
-
-# ============================================================
-# 10. PREDICTION
-# ============================================================
-
-print(
-    "\nRunning MobileNetV2 prediction..."
-)
-
-prediction = model.predict(
-    image_array,
-    verbose=1
-)
-
-prediction = np.asarray(
-    prediction
-)
-
-prediction_value = float(
-    prediction.reshape(-1)[0]
-)
-
-
-# ============================================================
-# 11. REAL / AI PROBABILITY
-# ============================================================
-
-ai_probability = prediction_value
-
-real_probability = (
-    1.0 - ai_probability
-)
-
-
-# ============================================================
-# 12. DECISION
-# ============================================================
-
-if ai_probability >= THRESHOLD:
-
-    verdict = "AI-GENERATED"
-
-    confidence = ai_probability
-
 else:
-
-    verdict = "REAL"
-
-    confidence = real_probability
-
-
-# ============================================================
-# 13. GRAD-CAM FUNCTION
-# ============================================================
-
-def generate_gradcam(
-    image_tensor,
-    full_model,
-    target_layer
-):
-
     print(
-        "\nCreating Grad-CAM model..."
+        "WARNING: No suitable convolutional layer "
+        "found for Grad-CAM."
     )
 
-    # --------------------------------------------------------
-    # IMPORTANT
-    #
-    # Use the actual target layer object from the loaded model.
-    # This preserves the original TensorFlow computation graph.
-    # --------------------------------------------------------
+print("=" * 60)
+print("Model ready for predictions.\n")
+
+
+# ============================================================
+# 4. GRAD-CAM GENERATION
+# ============================================================
+
+def _generate_gradcam(image_tensor, model, target_layer):
+    """
+    Generates a Grad-CAM heatmap for the given image tensor.
+
+    Returns a numpy heatmap array (H x W), values 0.0 to 1.0.
+    """
 
     grad_model = tf.keras.models.Model(
-        inputs=full_model.inputs,
+        inputs=model.inputs,
         outputs=[
             target_layer.output,
-            full_model.output
+            model.output
         ]
     )
-
-    print(
-        "Grad-CAM model created."
-    )
-
-    # --------------------------------------------------------
-    # Forward pass
-    # --------------------------------------------------------
 
     with tf.GradientTape() as tape:
 
@@ -296,413 +146,299 @@ def generate_gradcam(
 
         # Binary classifier
         if predictions.shape[-1] == 1:
-
             loss = predictions[:, 0]
-
         else:
-
             class_index = tf.argmax(
                 predictions[0]
             )
-
             loss = predictions[:, class_index]
 
-
-    # --------------------------------------------------------
     # Calculate gradients
-    # --------------------------------------------------------
-
     gradients = tape.gradient(
         loss,
         conv_outputs
     )
 
-
     if gradients is None:
-
         raise RuntimeError(
-            "\nGradients are None.\n"
+            "Gradients are None. "
             "The selected layer is not connected "
             "to the model output."
         )
 
-
-    print(
-        "Gradient calculation successful."
-    )
-
-
-    # --------------------------------------------------------
     # Global average pooling
-    # --------------------------------------------------------
-
     pooled_gradients = tf.reduce_mean(
         gradients,
         axis=(0, 1, 2)
     )
 
-
-    # --------------------------------------------------------
     # Remove batch dimension
-    # --------------------------------------------------------
-
     conv_outputs = conv_outputs[0]
 
-
-    # --------------------------------------------------------
     # Weighted activation maps
-    # --------------------------------------------------------
-
     heatmap = tf.reduce_sum(
-        conv_outputs *
-        pooled_gradients,
+        conv_outputs * pooled_gradients,
         axis=-1
     )
 
-
-    # --------------------------------------------------------
     # ReLU
-    # --------------------------------------------------------
+    heatmap = tf.maximum(heatmap, 0)
 
-    heatmap = tf.maximum(
-        heatmap,
-        0
-    )
-
-
-    # --------------------------------------------------------
     # Normalize
-    # --------------------------------------------------------
-
-    max_heatmap = tf.reduce_max(
-        heatmap
-    )
-
+    max_heatmap = tf.reduce_max(heatmap)
 
     if float(max_heatmap) > 1e-8:
-
-        heatmap = (
-            heatmap /
-            max_heatmap
-        )
-
+        heatmap = heatmap / max_heatmap
     else:
-
-        print(
-            "WARNING: Heatmap activation is zero."
-        )
-
-        heatmap = tf.zeros_like(
-            heatmap
-        )
-
+        heatmap = tf.zeros_like(heatmap)
 
     return heatmap.numpy()
 
 
 # ============================================================
-# 14. GENERATE GRAD-CAM
+# 5. SAVE HEATMAP OVERLAY TO FILE
 # ============================================================
 
-heatmap_success = False
+def _save_heatmap_overlay(
+    original_image, heatmap, save_path, alpha=0.40
+):
+    """
+    Overlays a Grad-CAM heatmap on the original image
+    and saves it to the given file path.
 
-heatmap_display = None
+    Returns True if saved successfully, False otherwise.
+    """
 
+    try:
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+    except ImportError:
+        return False
 
-try:
+    # Resize heatmap to original image size
+    heatmap_uint8 = (heatmap * 255).astype(np.uint8)
 
-    print(
-        "\nGenerating Grad-CAM..."
-    )
-
-    heatmap = generate_gradcam(
-        image_array,
-        model,
-        target_layer
-    )
-
-    print(
-        "Raw heatmap shape:",
-        heatmap.shape
-    )
-
-
-    # ========================================================
-    # RESIZE HEATMAP
-    # ========================================================
-
-    heatmap_uint8 = (
-        heatmap * 255
-    ).astype(np.uint8)
-
-
-    heatmap_image = Image.fromarray(
-        heatmap_uint8
-    )
-
+    heatmap_image = Image.fromarray(heatmap_uint8)
 
     heatmap_image = heatmap_image.resize(
         original_image.size,
         Image.Resampling.BILINEAR
     )
 
+    heatmap_uint8 = np.asarray(heatmap_image)
 
-    heatmap_uint8 = np.asarray(
-        heatmap_image
-    )
-
-
-    # ========================================================
-    # APPLY JET COLOR MAP
-    # ========================================================
-
+    # Apply JET color map
     try:
-
         jet = plt.colormaps["jet"]
-
     except AttributeError:
-
         jet = plt.get_cmap("jet")
-
 
     colored_heatmap = jet(
         heatmap_uint8 / 255.0
     )[:, :, :3]
 
-
     colored_heatmap = (
         colored_heatmap * 255
     ).astype(np.uint8)
 
-
-    # ========================================================
-    # ORIGINAL IMAGE ARRAY
-    # ========================================================
-
+    # Blend overlay
     original_array = np.asarray(
-        original_image,
-        dtype=np.float32
+        original_image, dtype=np.float32
     )
 
-
-    # ========================================================
-    # OVERLAY
-    # ========================================================
-
-    alpha = 0.40
-
-
-    heatmap_display_array = (
+    overlay_array = (
         original_array * (1.0 - alpha)
-        +
-        colored_heatmap.astype(
-            np.float32
-        ) * alpha
+        + colored_heatmap.astype(np.float32) * alpha
     )
 
-
-    heatmap_display_array = np.clip(
-        heatmap_display_array,
-        0,
-        255
+    overlay_array = np.clip(
+        overlay_array, 0, 255
     ).astype(np.uint8)
 
+    overlay_image = Image.fromarray(overlay_array)
 
-    heatmap_display = Image.fromarray(
-        heatmap_display_array
+    # Save to file
+    os.makedirs(
+        os.path.dirname(save_path),
+        exist_ok=True
     )
 
+    overlay_image.save(save_path, format="PNG")
 
-    heatmap_success = True
-
-
-    print(
-        "\nGrad-CAM generated successfully!"
-    )
-
-
-except Exception:
-
-    print("\n" + "!" * 60)
-
-    print(
-        "FAILED TO GENERATE GRAD-CAM"
-    )
-
-    print(
-        "Error details:"
-    )
-
-    traceback.print_exc()
-
-    print("!" * 60)
+    return True
 
 
 # ============================================================
-# 15. PRINT RESULT
+# 6. PREDICT IMAGE (PUBLIC API)
 # ============================================================
 
-print("\n")
+def predict_image(
+    image_path: str,
+    heatmap_save_path: str = None
+) -> dict:
+    """
+    Runs the MobileNetV2 AI-detection model on a single image.
 
-print("=" * 60)
-print("SIGNALSCOPE RESULT")
-print("=" * 60)
+    Parameters
+    ----------
+    image_path : str
+        Absolute path to the image file.
 
-print(
-    f"AI Probability   : "
-    f"{ai_probability * 100:.2f}%"
-)
+    heatmap_save_path : str, optional
+        If provided, the Grad-CAM heatmap overlay
+        will be saved to this path as a PNG file.
 
-print(
-    f"Real Probability : "
-    f"{real_probability * 100:.2f}%"
-)
+    Returns
+    -------
+    dict
+        {
+            "ai_probability": float,
+            "real_probability": float,
+            "threshold": float,
+            "confidence": float,
+            "verdict": "AI-GENERATED" | "REAL",
+            "gradcam_available": bool,
+            "gradcam_layer": str | None,
+            "heatmap_saved_path": str | None,
+            "disclaimer": str
+        }
+    """
 
-print(
-    f"Threshold        : "
-    f"{THRESHOLD * 100:.2f}%"
-)
+    # ----------------------------------------------------------
+    # Validate image path
+    # ----------------------------------------------------------
 
-print(
-    f"Confidence       : "
-    f"{confidence * 100:.2f}%"
-)
+    if not os.path.exists(image_path):
+        raise FileNotFoundError(
+            f"Image not found: {image_path}"
+        )
 
-print(
-    f"VERDICT          : "
-    f"{verdict}"
-)
+    # ----------------------------------------------------------
+    # Load and preprocess image
+    # ----------------------------------------------------------
 
-print("=" * 60)
+    original_image = Image.open(
+        image_path
+    ).convert("RGB")
 
+    image = original_image.resize((224, 224))
 
-# ============================================================
-# 16. DISPLAY ORIGINAL + GRAD-CAM
-# ============================================================
-
-if heatmap_success:
-
-    fig, axes = plt.subplots(
-        1,
-        2,
-        figsize=(14, 7)
+    image_array = np.asarray(
+        image, dtype=np.float32
     )
 
-
-    # --------------------------------------------------------
-    # ORIGINAL
-    # --------------------------------------------------------
-
-    axes[0].imshow(
-        original_image
+    image_array = np.expand_dims(
+        image_array, axis=0
     )
 
-    axes[0].set_title(
-        "SIGNALSCOPE ANALYSIS\n"
-        f"{verdict}\n"
-        f"AI: {ai_probability * 100:.2f}% | "
-        f"Real: {real_probability * 100:.2f}%"
+    image_array = preprocess_input(image_array)
+
+    # ----------------------------------------------------------
+    # Run prediction
+    # ----------------------------------------------------------
+
+    prediction = _model.predict(
+        image_array, verbose=0
     )
 
-    axes[0].axis("off")
+    prediction = np.asarray(prediction)
 
-
-    # --------------------------------------------------------
-    # GRAD-CAM
-    # --------------------------------------------------------
-
-    axes[1].imshow(
-        heatmap_display
+    prediction_value = float(
+        prediction.reshape(-1)[0]
     )
 
-    axes[1].set_title(
-        "GRAD-CAM HEATMAP\n"
-        "Regions influencing prediction"
-    )
+    # ----------------------------------------------------------
+    # Calculate probabilities
+    # ----------------------------------------------------------
 
-    axes[1].axis("off")
+    ai_probability = prediction_value
+    real_probability = 1.0 - ai_probability
 
+    # ----------------------------------------------------------
+    # Decision
+    # ----------------------------------------------------------
 
-else:
+    if ai_probability >= 0.8:
+        verdict = "Highly Likely AI gen"
+        confidence = ai_probability
+    elif ai_probability >= THRESHOLD:
+        verdict = "Likely AI gen"
+        confidence = ai_probability
+    elif real_probability >= 0.8:
+        verdict = "Highly Likely REAL"
+        confidence = real_probability
+    else:
+        verdict = "Likely REAL"
+        confidence = real_probability
 
-    plt.figure(
-        figsize=(9, 7)
-    )
+    # ----------------------------------------------------------
+    # Grad-CAM (save to file if path provided)
+    # ----------------------------------------------------------
 
-    plt.imshow(
-        original_image
-    )
+    gradcam_available = False
+    heatmap_saved = None
+    gradcam_layer_name = None
 
-    plt.title(
-        "SIGNALSCOPE ANALYSIS\n"
-        f"{verdict}\n"
-        f"AI: {ai_probability * 100:.2f}% | "
-        f"Real: {real_probability * 100:.2f}%\n"
-        "Grad-CAM unavailable"
-    )
+    if _target_layer is not None and heatmap_save_path:
 
-    plt.axis("off")
+        try:
 
+            heatmap = _generate_gradcam(
+                image_array, _model, _target_layer
+            )
 
-plt.tight_layout()
+            saved = _save_heatmap_overlay(
+                original_image,
+                heatmap,
+                heatmap_save_path
+            )
 
-plt.show()
+            if saved:
+                gradcam_available = True
+                heatmap_saved = heatmap_save_path
 
+            gradcam_layer_name = _target_layer.name
 
-# ============================================================
-# 17. FINAL JSON RESULT
-# ============================================================
+        except Exception:
 
-result = {
+            traceback.print_exc()
 
-    "image":
-        os.path.basename(
-            IMAGE_PATH
-        ),
+    elif _target_layer is not None:
 
-    "model":
-        MODEL_PATH,
+        gradcam_layer_name = _target_layer.name
 
-    "ai_probability":
-        round(
-            ai_probability,
-            4
-        ),
+    # ----------------------------------------------------------
+    # Return result
+    # ----------------------------------------------------------
 
-    "real_probability":
-        round(
-            real_probability,
-            4
-        ),
+    return {
 
-    "threshold":
-        THRESHOLD,
+        "ai_probability":
+            round(ai_probability, 4),
 
-    "confidence":
-        round(
-            confidence,
-            4
-        ),
+        "real_probability":
+            round(real_probability, 4),
 
-    "verdict":
-        verdict,
+        "threshold":
+            THRESHOLD,
 
-    "gradcam":
-        heatmap_success,
+        "confidence":
+            round(confidence, 4),
 
-    "gradcam_layer":
-        target_layer.name,
+        "verdict":
+            verdict,
 
-    "disclaimer":
-        "This is a likelihood assessment, "
-        "not a definitive authenticity claim."
-}
+        "gradcam_available":
+            gradcam_available,
 
+        "gradcam_layer":
+            gradcam_layer_name,
 
-print("\nResult:")
+        "heatmap_saved_path":
+            heatmap_saved,
 
-print(result)
-
-print(
-    "\nAnalysis completed."
-)
+        "disclaimer":
+            "This is a likelihood assessment, "
+            "not a definitive authenticity claim."
+    }
