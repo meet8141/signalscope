@@ -38,12 +38,12 @@ For a comprehensive log of the model training and layer structures, please refer
 
 Below are the visualizations and outputs from the training run located in the `temp` directory:
 
-![Image 1](temp/WhatsApp%20Image%202026-09-13%20at%204.10.42%20PM.jpeg)
-![Image 2](temp/WhatsApp%20Image%202026-09-13%20at%204.10.58%20PM.jpeg)
-![Image 3](temp/WhatsApp%20Image%202026-09-13%20at%204.11.04%20PM.jpeg)
-![Image 4](temp/WhatsApp%20Image%202026-09-13%20at%204.11.10%20PM.jpeg)
-![Image 5](temp/WhatsApp%20Image%202026-09-13%20at%204.11.19%20PM.jpeg)
-![Image 6](temp/WhatsApp%20Image%202026-09-13%20at%204.11.28%20PM.jpeg)
-![Image 7](temp/WhatsApp%20Image%202026-09-13%20at%204.11.51%20PM.jpeg)
-![Image 8](temp/WhatsApp%20Image%202026-09-13%20at%204.12.00%20PM.jpeg)
-![Image 9](temp/WhatsApp%20Image%202026-09-13%20at%204.12.08%20PM.jpeg)
+![Image 1](images/WhatsApp%20Image%202026-09-13%20at%204.10.42%20PM.jpeg)
+![Image 2](images/WhatsApp%20Image%202026-09-13%20at%204.10.58%20PM.jpeg)
+![Image 3](images/WhatsApp%20Image%202026-09-13%20at%204.11.04%20PM.jpeg)
+![Image 4](images/WhatsApp%20Image%202026-09-13%20at%204.11.10%20PM.jpeg)
+![Image 5](images/WhatsApp%20Image%202026-09-13%20at%204.11.19%20PM.jpeg)
+![Image 6](images/WhatsApp%20Image%202026-09-13%20at%204.11.28%20PM.jpeg)
+![Image 7](images/WhatsApp%20Image%202026-09-13%20at%204.11.51%20PM.jpeg)
+![Image 8](images/WhatsApp%20Image%202026-09-13%20at%204.12.00%20PM.jpeg)
+![Image 9](images/WhatsApp%20Image%202026-09-13%20at%204.12.08%20PM.jpeg)
