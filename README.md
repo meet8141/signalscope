@@ -113,8 +113,6 @@ The following are the primary metrics and operating points from our actual model
 ### Additional
 *   **Average Precision**: 0.9633
 
-> **Note**: For a comprehensive log of the model training and layer structures, please refer to the full training log here: [Model Training Results](temp/model_training_results.md)
-
 ---
 
 ## 🖼️ Gallery / Visualizations
