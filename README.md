@@ -4,6 +4,9 @@
   <em>A Multi-Layered Hybrid Forensic Pipeline for Real vs. AI-Generated Image Detection Using Gated Ingestion Logic</em>
 </p>
 
+> **🎯 About:** A high-accuracy, multi-layered forensic pipeline designed to detect AI-generated images using deep learning (MobileNetV2), metadata analysis, and pixel-level forensics.
+
+
 ---
 
 ## 📖 Introduction & Problem Statement
@@ -16,7 +19,7 @@ Traditional detection mechanisms often rely on a single layer of verification—
 
 ---
 
-## 🏗️ Core Methodology (Five Parallel Layers)
+## 🏗️ Core Methodology (Four Parallel Layers)
 
 The pipeline enforces parallel analysis across five foundational layers:
 
@@ -34,11 +37,6 @@ The pipeline enforces parallel analysis across five foundational layers:
    - **Inverted residuals & linear bottlenecks**: Preserving subtle low-level edge artifacts.
    - **Depthwise separable convolutions**: Reducing computational complexity enabling real-time analysis on edge devices.
    - **Transfer learning & fine-tuning**: Leveraging pre-trained ImageNet weights adapted specifically for deepfake detection.
-5. **SynthID Image Layer (Pixel + Perceptual Domain)**
-   - **Deep neural embedding**: Integrating spatial watermarks into pixel values.
-   - **Perceptual masking**: Hiding watermark payloads within complex textures based on the Human Visual System (HVS).
-   - **Transformation robustness**: Surviving edits like heavy JPEG compression or cropping.
-   - **Probabilistic extraction**: Utilizing specialized classifiers for confidence scores.
 
 ---
 
@@ -54,6 +52,26 @@ The pipeline enforces parallel analysis across five foundational layers:
 | **Texture Matrix Analytics** | `scikit-image` | `feature.graycomatrix()`, `feature.graycoprops()` | Compute GLCM contrast/homogeneity metrics. |
 | **Deep Learning Inference** | `TensorFlow(keras)` | `MobileNetV2()` | Predict AI-generation likelihood score. |
 | **Backend API** | `FastAPI` | `main.py` setup | Expose pipeline functionality via endpoints. |
+
+---
+
+## 🚀 How to Run the Backend
+
+To spin up the FastAPI backend locally, open your terminal and run the following commands:
+
+```bash
+# Navigate to the backend directory
+cd backend
+
+# Install dependencies (if you haven't already)
+pip install -r ../requirements.txt
+
+# Start the FastAPI server using Uvicorn
+uvicorn main:app --reload
+```
+
+The API will be available at `http://localhost:8000`.
+You can access the interactive Swagger documentation at `http://localhost:8000/docs`.
 
 ---
 
