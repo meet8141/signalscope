@@ -1,8 +1,5 @@
 # 🔍 SignalScope: Real vs. AI-Generated Image Detection Pipeline
 
-<p align="center">
-  <em>A Multi-Layered Hybrid Forensic Pipeline for Real vs. AI-Generated Image Detection Using Gated Ingestion Logic</em>
-</p>
 
 > **🎯 About:** A high-accuracy, multi-layered forensic pipeline designed to detect AI-generated images using deep learning (MobileNetV2), metadata analysis, and pixel-level forensics.
 
