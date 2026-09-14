@@ -96,7 +96,7 @@ We utilize high-quality combined datasets to train our models:
 We initialized a MobileNetV2 architecture with pre-trained weights (base brain frozen), augmenting it with custom decision layers for robust 0 (Real) and 1 (Fake) classification.
 
 ### Training Strategy
-- **Input Size**: 512x512
+- **Input Size**: 224x224
 - **Batch Size**: 32
 - **Epochs**: 10
 - **Smart Callbacks**: Early stopping, learning rate reduction on plateau, and model checkpointing on best accuracy.
