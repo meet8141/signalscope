@@ -5,8 +5,8 @@ import { ShowcaseGrid } from './ShowcaseGrid';
 import { MetadataViewer, C2PAViewer, ForensicViewer, ModelViewer } from './ResultViewers';
 
 export function TabbedContent({ results }) {
-  const [activeTab, setActiveTab] = useState('Metadata');
-  const tabs = ['Metadata', 'C2PA Trace', 'Forensics', 'AI Model'];
+  const [activeTab, setActiveTab] = useState('AI Model');
+  const tabs = ['AI Model', 'C2PA Trace', 'Metadata', 'Forensics'];
 
   return (
     <section className="relative px-8 py-24 max-w-[1400px] mx-auto z-10" id="analysis">
@@ -57,7 +57,7 @@ export function TabbedContent({ results }) {
 
             {/* Show Grid if no results yet, otherwise show data */}
             {!results ? (
-              activeTab === 'Metadata' ? (
+              activeTab === 'AI Model' ? (
                 <div className="p-8 border border-white/10 rounded-xl bg-stone-black/50 text-mono text-sm opacity-60">
                   Upload an image signal to run {activeTab.toLowerCase()} diagnostics.
                 </div>
@@ -68,10 +68,11 @@ export function TabbedContent({ results }) {
               )
             ) : (
               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                {activeTab === 'AI Model' && <ModelViewer data={results.model} />}
                 {activeTab === 'Metadata' && <MetadataViewer data={results.metadata} />}
                 {activeTab === 'C2PA Trace' && <C2PAViewer data={results.c2pa} />}
                 {activeTab === 'Forensics' && <ForensicViewer data={results.forensic} />}
-                {activeTab === 'AI Model' && <ModelViewer data={results.model} />}
+
               </div>
             )}
           </div>

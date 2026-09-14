@@ -99,8 +99,9 @@ export function CustomCursor() {
       <div ref={dotRef} className="fixed top-0 left-0 pointer-events-none z-[9999]" style={{ willChange: 'transform' }}>
         {/* Main Dot Inner Container (Handles Animations & Visuals) */}
         <div 
-          className={`transition-all duration-200 ease-out rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center
-            ${hidden ? 'opacity-0' : (linkHovered ? 'w-0 h-0 opacity-0' : 'w-2 h-2 bg-acid-lime opacity-100')} 
+          className={`transition-all duration-200 ease-out rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center mix-blend-difference
+            ${hidden ? 'opacity-0' : 'opacity-100'} 
+            ${hidden ? 'opacity-0' : 'opacity-100'} ${'w-3 h-3 bg-acid-lime'} ${clicked ? 'scale-50' : 'scale-100'} 
             ${clicked ? 'scale-50' : 'scale-100'}`}
         />
       </div>
@@ -109,8 +110,9 @@ export function CustomCursor() {
       <div ref={ringRef} className="fixed top-0 left-0 pointer-events-none z-[9998]" style={{ willChange: 'transform' }}>
         {/* Trailing Ring Inner Container */}
         <div 
-          className={`transition-all duration-300 ease-out rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center
-            ${hidden ? 'opacity-0 scale-50' : (linkHovered ? 'w-16 h-16 bg-acid-lime/20 border border-acid-lime/30 backdrop-blur-[1px] opacity-100' : 'w-8 h-8 border border-acid-lime/50 bg-transparent opacity-100')} 
+          className={`transition-all duration-300 ease-out rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center mix-blend-difference
+            ${hidden ? 'opacity-0 scale-50' : 'opacity-100'}
+            ${linkHovered ? 'w-24 h-24 bg-acid-lime/30 blur-sm' : 'w-10 h-10 border-[1.5px] border-white bg-transparent'} 
             ${clicked ? 'scale-75' : 'scale-100'}`}
         />
       </div>

@@ -6,10 +6,12 @@ import { api } from '../api/client';
 export function CheckPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [results, setResults] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleUpload = async (file) => {
     setIsUploading(true);
     setResults(null);
+    setSelectedFile(file);
     
     try {
       const formData = new FormData();
@@ -38,7 +40,7 @@ export function CheckPage() {
 
   return (
     <div className="pt-20">
-      <Hero onUpload={handleUpload} isUploading={isUploading} results={results} />
+      <Hero onUpload={handleUpload} isUploading={isUploading} results={results} selectedFile={selectedFile} />
       <TabbedContent results={results} />
     </div>
   );

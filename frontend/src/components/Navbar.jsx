@@ -14,10 +14,10 @@ export function Navbar() {
         </Link>
 
         <div className="flex items-center gap-6 font-mono text-sm uppercase tracking-wider">
-          <a href="https://github.com/aksharpatel/signalscope" target="_blank" rel="noopener noreferrer" className="relative group opacity-60 hover:opacity-100 hover:text-acid-lime transition-colors">
-            Documentation
+          <Link to="/team" className="relative group opacity-60 hover:opacity-100 hover:text-acid-lime transition-colors">
+            Team
             <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-acid-lime transition-all duration-300 ease-out group-hover:w-full"></span>
-          </a>
+          </Link>
 
           {isCheckPage ? (
             <Link to="/" className="px-5 py-2 border border-white/20 rounded-full opacity-80 hover:bg-white hover:text-stone-black transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]">

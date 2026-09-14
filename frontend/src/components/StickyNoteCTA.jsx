@@ -1,40 +1,58 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, FileImage, ShieldAlert, ShieldCheck } from 'lucide-react';
 
-export function StickyNoteCTA({ results }) {
+export function StickyNoteCTA({ results, selectedFile }) {
+  const fileName = selectedFile?.name || 'No signal selected';
+  const isAuthentic = results?.trust_score >= 7;
+
   return (
-    <div className={`absolute -left-12 bottom-24 z-10 w-72 origin-bottom-left rotate-[6deg] rounded-lg p-10 shadow-2xl transition-transform duration-300 hover:scale-105 hover:rotate-0 ${results ? (results.trust_score >= 7 ? 'bg-acid-lime text-stone-black' : 'bg-red-400 text-stone-black') : 'bg-acid-lime text-stone-black'}`}>
+    <div className="relative z-10 w-full flex flex-col justify-center text-off-white">
       {results ? (
         <>
-          <div className="flex justify-between items-start mb-6">
-            <h3 className="font-serif text-3xl font-light leading-tight">
-              Final <br />
-              <span className="italic font-medium">Verdict</span>
-            </h3>
-            <div className="flex flex-col items-end">
-              <span className="text-4xl font-serif">{results.trust_score}</span>
-              <span className="text-[10px] font-mono uppercase opacity-70">/ 10 Score</span>
-            </div>
+          <div className="mb-8 inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-warm-charcoal/50 backdrop-blur-sm w-fit">
+            <FileImage size={16} className={isAuthentic ? "text-acid-lime" : "text-red-400"} />
+            <span className="font-mono text-sm opacity-80 max-w-[250px] truncate">{fileName}</span>
           </div>
-          <p className="mb-6 font-sans text-xl font-medium leading-tight">
-            {results.model?.verdict || 'Unknown'}
-          </p>
-          <div className="flex cursor-pointer items-center justify-between border-t border-stone-black/20 pt-4 opacity-70 transition-opacity hover:opacity-100">
-            <span className="font-sans text-sm font-bold uppercase tracking-wider">Analysis Complete</span>
-            <ArrowRight size={18} />
+
+          <h1 className="font-serif text-6xl md:text-8xl font-extralight leading-[0.9] tracking-tight mb-8">
+            <span className={isAuthentic ? "text-acid-lime font-medium" : "text-red-400 font-medium"}>
+              {results.trust_score}
+            </span>
+            <span className="text-4xl md:text-5xl opacity-40">/100</span>
+            <br />
+            <span className="italic font-light opacity-90 text-5xl md:text-7xl mt-2 block">Trust Score</span>
+          </h1>
+
+          <div className="flex items-center gap-4 mb-12">
+            {isAuthentic ? (
+              <ShieldCheck size={32} className="text-acid-lime" />
+            ) : (
+              <ShieldAlert size={32} className="text-red-400" />
+            )}
+            <p className="font-sans text-xl md:text-2xl font-medium leading-tight opacity-90">
+              {results.model?.verdict || 'Analysis Complete'}
+            </p>
+          </div>
+
+          <div 
+            onClick={() => document.getElementById('analysis')?.scrollIntoView({ behavior: 'smooth' })}
+            className="flex cursor-pointer items-center justify-between border-t border-white/20 pt-4 opacity-50 transition-opacity hover:opacity-100 max-w-sm"
+          >
+            <span className="font-sans text-sm font-bold uppercase tracking-wider">Full Diagnostics Below</span>
+            <ArrowRight size={18} className="rotate-90" />
           </div>
         </>
       ) : (
         <>
-          <h3 className="mb-4 font-serif text-3xl font-light leading-tight">
-            Authenticate <br />
-            <span className="italic font-medium">Digital Reality</span>
-          </h3>
-          <p className="mb-8 font-sans text-sm font-medium opacity-80">
-            Run comprehensive forensic analysis on media assets in milliseconds.
+          <h1 className="font-serif text-6xl md:text-8xl font-extralight leading-[0.9] tracking-tight mb-8">
+            Signal <br />
+            <span className="italic font-light opacity-90">Analysis</span>
+          </h1>
+          <p className="font-sans text-xl opacity-60 max-w-md mb-12 leading-relaxed">
+            Run comprehensive forensic analysis on media assets in milliseconds. Upload a signal to begin.
           </p>
-          <div className="flex cursor-pointer items-center justify-between border-t border-stone-black/20 pt-4 opacity-70 transition-opacity hover:opacity-100">
-            <span className="font-sans text-sm font-bold uppercase tracking-wider">Deploy Scan</span>
-            <ArrowRight size={18} />
+          <div className="flex items-center justify-between border-t border-white/20 pt-4 opacity-50 max-w-sm">
+            <span className="font-sans text-sm font-bold uppercase tracking-wider">Awaiting Input</span>
+            <ArrowRight size={18} className="animate-pulse" />
           </div>
         </>
       )}

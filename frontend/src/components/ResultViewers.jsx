@@ -1,4 +1,4 @@
-import { AlertCircle, CheckCircle2, Fingerprint, Image as ImageIcon, Activity, Hash, AlertTriangle } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Fingerprint, Image as ImageIcon, Activity, Hash, AlertTriangle, Cpu } from 'lucide-react';
 
 function SectionTitle({ title, icon: Icon }) {
   return (
@@ -34,9 +34,37 @@ function BooleanBadge({ label, value, invertColors = false }) {
   );
 }
 
+function renderDynamicData(obj, knownKeys = [], depth = 0) {
+  if (!obj || typeof obj !== 'object') return null;
+  return Object.entries(obj).map(([key, value]) => {
+    if (depth === 0 && knownKeys.includes(key)) return null;
+    
+    if (typeof value === 'object' && value !== null) {
+      if (Object.keys(value).length === 0) return null;
+      return (
+        <div key={key} className="col-span-full mt-6 bg-stone-black/30 p-6 rounded-xl border border-white/5">
+          <div className="flex items-center gap-3 mb-6 pb-2 border-b border-white/5">
+            <Cpu className="text-acid-lime/50" size={16} />
+            <h5 className="font-serif text-xl font-light capitalize text-acid-lime/90">{key.replace(/_/g, ' ')}</h5>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {renderDynamicData(value, [], depth + 1)}
+          </div>
+        </div>
+      );
+    }
+
+    if (typeof value === 'boolean') {
+      return <BooleanBadge key={key} label={key.replace(/_/g, ' ')} value={value} />;
+    }
+    return <GridItem key={key} label={key.replace(/_/g, ' ')} value={String(value)} />;
+  });
+}
+
 export function MetadataViewer({ data }) {
   if (!data) return null;
   const { file_info, image_properties } = data;
+  const knownKeys = ['file_info', 'image_properties'];
 
   return (
     <div className="space-y-12">
@@ -62,12 +90,17 @@ export function MetadataViewer({ data }) {
           <GridItem label="Animated" value={image_properties?.is_animated ? 'Yes' : 'No'} />
         </div>
       </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {renderDynamicData(data, knownKeys)}
+      </div>
     </div>
   );
 }
 
 export function C2PAViewer({ data }) {
   if (!data) return null;
+  const knownKeys = ['status', 'message', 'c2pa_detected', 'confidence_percentage'];
 
   return (
     <div className="space-y-8">
@@ -81,7 +114,11 @@ export function C2PAViewer({ data }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <BooleanBadge label="C2PA Data Detected" value={data.c2pa_detected} />
-        <GridItem label="Confidence" value={`${data.confidence_percentage}%`} />
+        {data.confidence_percentage !== undefined && (
+          <GridItem label="Confidence" value={`${data.confidence_percentage}%`} />
+        )}
+        
+        {renderDynamicData(data, knownKeys)}
       </div>
     </div>
   );
@@ -89,6 +126,7 @@ export function C2PAViewer({ data }) {
 
 export function ForensicViewer({ data }) {
   if (!data) return null;
+  const knownKeys = ['noise_analysis', 'texture_analysis', 'ela_analysis', 'fft_analysis', 'double_jpeg', 'cfa_artifacts'];
 
   return (
     <div className="space-y-12">
@@ -130,12 +168,17 @@ export function ForensicViewer({ data }) {
           </div>
         </div>
       )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {renderDynamicData(data, knownKeys)}
+      </div>
     </div>
   );
 }
 
 export function ModelViewer({ data }) {
   if (!data) return null;
+  const knownKeys = ['ai_probability', 'real_probability', 'disclaimer', 'gradcam_available', 'gradcam_layer', 'heatmap_file', 'image_file', 'verdict'];
 
   return (
     <div className="space-y-8">
@@ -179,6 +222,10 @@ export function ModelViewer({ data }) {
              </div>
           )}
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {renderDynamicData(data, knownKeys)}
       </div>
     </div>
   );
