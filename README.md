@@ -138,17 +138,21 @@ The following are the primary metrics and operating points from our actual model
 Below are the visualizations and outputs from the training run located in the `images` directory:
 
 <div align="center">
-  <img src="images/WhatsApp%20Image%202026-09-13%20at%204.10.42%20PM.jpeg" width="30%" alt="Image 1"/>
+ <img src="images/WhatsApp%20Image%202026-09-13%20at%204.10.42%20PM.jpeg" width="30%" alt="Image 1"/>
   <img src="images/WhatsApp%20Image%202026-09-13%20at%204.10.58%20PM.jpeg" width="30%" alt="Image 2"/>
-  <img src="images/WhatsApp%20Image%202026-09-13%20at%204.11.04%20PM.jpeg" width="30%" alt="Image 3"/>
   <br/>
-  <img src="images/WhatsApp%20Image%202026-09-13%20at%204.11.10%20PM.jpeg" width="30%" alt="Image 4"/>
   <img src="images/WhatsApp%20Image%202026-09-13%20at%204.11.19%20PM.jpeg" width="30%" alt="Image 5"/>
+  <img src="images/WhatsApp%20Image%202026-09-13%20at%204.11.10%20PM.jpeg" width="30%" alt="Image 4"/>
+  <br/>
+  
+  <img src="images/WhatsApp%20Image%202026-09-13%20at%204.11.51%20PM.jpeg" width="30%" alt="Image 7"/>
+  <img src="images/WhatsApp%20Image%202026-09-13%20at%204.12.08%20PM.jpeg" width="30%" alt="Image 9"/>
+  <br/>
+  
+  <img src="images/WhatsApp%20Image%202026-09-13%20at%204.12.00%20PM.jpeg" width="30%" alt="Image 8"/>
   <img src="images/WhatsApp%20Image%202026-09-13%20at%204.11.28%20PM.jpeg" width="30%" alt="Image 6"/>
   <br/>
-  <img src="images/WhatsApp%20Image%202026-09-13%20at%204.11.51%20PM.jpeg" width="30%" alt="Image 7"/>
-  <img src="images/WhatsApp%20Image%202026-09-13%20at%204.12.00%20PM.jpeg" width="30%" alt="Image 8"/>
-  <img src="images/WhatsApp%20Image%202026-09-13%20at%204.12.08%20PM.jpeg" width="30%" alt="Image 9"/>
+    <img src="images/WhatsApp%20Image%202026-09-13%20at%204.11.04%20PM.jpeg" width="30%" alt="Image 3"/>
 </div>
 
 ---
