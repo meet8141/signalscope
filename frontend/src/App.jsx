@@ -10,9 +10,11 @@ import { PerformancePage } from './pages/PerformancePage';
 import { DatasetPage } from './pages/DatasetPage';
 import { DeveloperPage } from './pages/DeveloperPage';
 import { FAQPage } from './pages/FAQPage';
+import { LoginPage } from './pages/LoginPage';
 import { Footer } from './components/Footer';
 import { CustomCursor } from './components/CustomCursor';
 import { api } from './api/client';
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
   useEffect(() => {
@@ -28,28 +30,31 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <CustomCursor />
-      <div className="min-h-screen bg-stone-black text-off-white selection:bg-acid-lime selection:text-stone-black overflow-x-hidden flex flex-col">
-        <Navbar />
-        
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/check" element={<CheckPage />} />
-            <Route path="/team" element={<TeamPage />} />
-            <Route path="/architecture" element={<ArchitecturePage />} />
-            <Route path="/research" element={<ResearchPage />} />
-            <Route path="/performance" element={<PerformancePage />} />
-            <Route path="/dataset" element={<DatasetPage />} />
-            <Route path="/developer" element={<DeveloperPage />} />
-            <Route path="/faq" element={<FAQPage />} />
-          </Routes>
-        </main>
+    <AuthProvider>
+      <BrowserRouter>
+        <CustomCursor />
+        <div className="min-h-screen bg-stone-black text-off-white selection:bg-acid-lime selection:text-stone-black overflow-x-hidden flex flex-col">
+          <Navbar />
+          
+          <main className="flex-grow flex flex-col">
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/check" element={<CheckPage />} />
+              <Route path="/team" element={<TeamPage />} />
+              <Route path="/architecture" element={<ArchitecturePage />} />
+              <Route path="/research" element={<ResearchPage />} />
+              <Route path="/performance" element={<PerformancePage />} />
+              <Route path="/dataset" element={<DatasetPage />} />
+              <Route path="/developer" element={<DeveloperPage />} />
+              <Route path="/faq" element={<FAQPage />} />
+            </Routes>
+          </main>
 
-        <Footer />
-      </div>
-    </BrowserRouter>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

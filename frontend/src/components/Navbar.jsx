@@ -1,9 +1,12 @@
-import { Shield } from 'lucide-react';
+import { Shield, LogOut } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { logout } from '../firebase';
 
 export function Navbar() {
   const location = useLocation();
   const isCheckPage = location.pathname === '/check';
+  const { user } = useAuth();
 
   return (
     <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-stone-black/80 backdrop-blur-md">
@@ -26,6 +29,34 @@ export function Navbar() {
           ) : (
             <Link to="/check" className="px-5 py-2 bg-acid-lime text-stone-black rounded-full font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(212,242,104,0.5)] hover:bg-white">
               Get Started
+            </Link>
+          )}
+
+          {user ? (
+            <div className="flex items-center gap-4 ml-2">
+              <div className="flex items-center gap-2">
+                {user.photoURL ? (
+                  <img src={user.photoURL} alt="Profile" className="w-8 h-8 rounded-full border border-white/20" />
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+                    {user.email?.charAt(0).toUpperCase()}
+                  </div>
+                )}
+              </div>
+              <button
+                onClick={logout}
+                className="text-white/60 hover:text-red-400 transition-colors flex items-center gap-1"
+                title="Logout"
+              >
+                <LogOut size={18} />
+              </button>
+            </div>
+          ) : (
+            <Link 
+              to="/login"
+              className="ml-2 px-4 py-1.5 border border-white/20 rounded-full text-xs hover:bg-white/10 transition-all duration-300"
+            >
+              Sign In
             </Link>
           )}
         </div>
