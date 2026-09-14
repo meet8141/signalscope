@@ -51,15 +51,15 @@ export function Navbar() {
           {user ? (
             <div className="flex items-center gap-4 ml-2">
               <div className="relative" ref={dropdownRef}>
-                <button 
+                <button
                   onClick={() => setShowDropdown(!showDropdown)}
                   className="flex items-center gap-2 focus:outline-none hover:scale-105 transition-transform"
                   title="View Profile"
                 >
                   {user.photoURL && !imageError ? (
-                    <img 
-                      src={user.photoURL} 
-                      alt="Profile" 
+                    <img
+                      src={user.photoURL}
+                      alt="Profile"
                       className="w-8 h-8 rounded-full border border-white/20 cursor-pointer"
                       referrerPolicy="no-referrer"
                       onError={() => setImageError(true)}
@@ -86,7 +86,7 @@ export function Navbar() {
               </button>
             </div>
           ) : (
-            <Link 
+            <Link
               to="/login"
               className="ml-2 px-4 py-1.5 border border-white/20 rounded-full text-xs hover:bg-white/10 transition-all duration-300"
             >
