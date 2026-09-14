@@ -1,4 +1,4 @@
-import { ArrowRight, FileImage, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { ArrowRight, FileImage, ShieldAlert, ShieldCheck, Download } from 'lucide-react';
 
 export function StickyNoteCTA({ results, selectedFile }) {
   const fileName = selectedFile?.name || 'No signal selected';
@@ -33,12 +33,21 @@ export function StickyNoteCTA({ results, selectedFile }) {
             </p>
           </div>
 
-          <div 
-            onClick={() => document.getElementById('analysis')?.scrollIntoView({ behavior: 'smooth' })}
-            className="flex cursor-pointer items-center justify-between border-t border-white/20 pt-4 opacity-50 transition-opacity hover:opacity-100 max-w-sm"
-          >
-            <span className="font-sans text-sm font-bold uppercase tracking-wider">Full Diagnostics Below</span>
-            <ArrowRight size={18} className="rotate-90" />
+          <div className="flex flex-col gap-6 w-full max-w-sm mt-4">
+            <button
+              onClick={() => window.print()}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 sm:py-4 bg-acid-lime text-stone-black font-serif text-base sm:text-lg rounded-full hover:bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(212,242,104,0.3)] transition-all duration-300 w-full"
+            >
+              <Download size={20} />
+              Download Full Report
+            </button>
+            <div 
+              onClick={() => document.getElementById('analysis')?.scrollIntoView({ behavior: 'smooth' })}
+              className="flex cursor-pointer items-center justify-between border-t border-white/20 pt-4 opacity-50 transition-opacity hover:opacity-100 w-full"
+            >
+              <span className="font-sans text-sm font-bold uppercase tracking-wider">Full Diagnostics Below</span>
+              <ArrowRight size={18} className="rotate-90" />
+            </div>
           </div>
         </>
       ) : (

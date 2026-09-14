@@ -27,8 +27,8 @@ export function Footer() {
       {/* Subtle top glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-acid-lime/30 to-transparent"></div>
 
-      <div className="max-w-[1400px] mx-auto px-8 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-8 pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-16">
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-6">
@@ -42,7 +42,7 @@ export function Footer() {
               <a href="https://github.com/meet8141/signalscope" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-off-white/60 hover:bg-acid-lime hover:text-stone-black hover:border-acid-lime transition-all">
                 <GithubIcon />
               </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-off-white/60 hover:text-white hover:bg-[#0A66C2] hover:border-[#0A66C2] transition-all">
+              <a href="https://www.linkedin.com/groups/40598002/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-off-white/60 hover:text-white hover:bg-[#0A66C2] hover:border-[#0A66C2] transition-all">
                 <LinkedinIcon />
               </a>
             </div>

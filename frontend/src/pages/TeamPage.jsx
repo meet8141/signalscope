@@ -26,12 +26,12 @@ const PortfolioIcon = () => (
 );
 
 const teamMembers = [
-  { name: 'Akshar Patel', role: 'Team Leader', linkedin: 'https://linkedin.com/in/akshar-patel-a83611344', github: 'https://github.com/aksharpatel007', portfolio: 'https://aksharpatel007.github.io/Portfolio/' },
-  { name: 'Meet Patel', role: 'Developer', linkedin: 'https://www.linkedin.com/in/meet-patel-93a3b12a7/', github: 'https://github.com/meet8141', portfolio: 'https://meetpatel8141.vercel.app/' },
-  { name: 'Riya Savaliya', role: 'Developer', linkedin: 'https://www.linkedin.com/in/riya-savaliya-9032ba382/', github: 'https://github.com/riyasavalia09/', portfolio: '' },
-  { name: 'Priyal Ramani', role: 'Developer', linkedin: 'https://www.linkedin.com/in/priyal-ramani-197417329/', github: 'https://github.com/priyal63/', portfolio: '' },
-  { name: 'Varshil Savaliya', role: 'Developer', linkedin: '', github: '', portfolio: '' },
-  { name: 'Deep Vanani', role: 'Developer', linkedin: '', github: '', portfolio: '' },
+  { name: 'Akshar Patel', image: '/images/akshar.png', role: 'Team Leader', linkedin: 'https://linkedin.com/in/akshar-patel-a83611344', github: 'https://github.com/aksharpatel007', portfolio: 'https://aksharpatel007.github.io/Portfolio/' },
+  { name: 'Riya Savaliya', image: '/images/riya.png', role: 'QA Contributor', linkedin: 'https://www.linkedin.com/in/riya-savaliya-9032ba382/', github: 'https://github.com/riyasavalia09/', portfolio: '' },
+  { name: 'Meet Patel', image: '/images/meet.jpeg', role: 'Core Developer', linkedin: 'https://www.linkedin.com/in/meet-patel-93a3b12a7/', github: 'https://github.com/meet8141', portfolio: 'https://meetpatel8141.vercel.app/' },
+  { name: 'Priyal Ramani', image: '/images/priyal.jpeg', role: 'UI/UX Desginer', linkedin: 'https://www.linkedin.com/in/priyal-ramani-197417329/', github: 'https://github.com/priyal63/', portfolio: '' },
+  { name: 'Deep Vanani', image: '/images/deep.png', role: 'UI Prototype', linkedin: 'https://www.linkedin.com/in/dip-vanani-754a94362', github: '', portfolio: '' },
+  { name: 'Varshil Savaliya', image: '/images/varshil.png', role: 'Helper Hand', linkedin: 'linkedin.com/in/varshil-savaliya-234a8b315', github: '', portfolio: '' },
 ];
 
 export function TeamPage() {
@@ -51,29 +51,56 @@ export function TeamPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {teamMembers.map((member, idx) => (
-          <div key={idx} className="bg-warm-charcoal p-8 rounded-2xl border border-white/10 hover:border-acid-lime/50 transition-all duration-300 group relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-acid-lime/5 rounded-bl-full -z-10 group-hover:scale-150 transition-transform duration-500"></div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {teamMembers.map((member, idx) => {
+          const isLeader = member.role === 'Team Leader';
+          return (
+            <div key={idx} className={`bg-warm-charcoal p-6 rounded-2xl border transition-all duration-300 group relative overflow-hidden flex flex-col xl:flex-row items-center xl:items-start gap-6 h-full ${isLeader
+              ? 'border-acid-lime shadow-[0_0_30px_rgba(212,242,104,0.15)]'
+              : 'border-white/10 hover:border-acid-lime/50'
+              }`}>
 
-            <h4 className="font-sans font-medium text-2xl text-off-white mb-2 group-hover:text-acid-lime transition-colors">{member.name}</h4>
-            <p className="font-mono text-sm text-off-white/50 uppercase tracking-widest mb-8">{member.role}</p>
-
-            <div className="flex items-center gap-4">
-              <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-off-white/80 hover:text-white hover:bg-[#0A66C2] hover:border-[#0A66C2] transition-all">
-                <LinkedinIcon />
-              </a>
-              <a href={member.github} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-off-white/80 hover:text-white hover:bg-[#333] hover:border-[#333] transition-all">
-                <GithubIcon />
-              </a>
-              {member.portfolio && (
-                <a href={member.portfolio} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-off-white/80 hover:text-white hover:bg-acid-lime hover:border-acid-lime transition-all">
-                  <PortfolioIcon />
-                </a>
+              <div className="absolute top-0 right-0 w-48 h-48 bg-acid-lime/5 rounded-bl-full -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+              {isLeader && (
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-acid-lime to-transparent opacity-70"></div>
               )}
+
+              {/* Left side: Rectangular Image */}
+              <div className={`shrink-0 overflow-hidden rounded-xl border border-white/10 group-hover:border-acid-lime/50 transition-colors w-32 h-40`}>
+                <img src={member.image} alt={member.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100" />
+              </div>
+
+              {/* Right side: Details */}
+              <div className="flex flex-col h-full flex-grow text-center xl:text-left py-2 w-full">
+                <h4 className={`font-sans font-medium text-off-white group-hover:text-acid-lime transition-colors mb-2 text-2xl`}>{member.name}</h4>
+
+                <div className="font-mono text-sm text-off-white/70 uppercase tracking-widest mb-4 flex items-center justify-center xl:justify-start gap-2 flex-wrap">
+                  <span className={isLeader ? "text-acid-lime" : ""}>{member.role}</span>
+                </div>
+
+                <div className="flex-grow"></div>
+
+                <div className="flex items-center justify-center xl:justify-start gap-3 mt-auto">
+                  {member.linkedin && (
+                    <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-off-white/80 hover:text-white hover:bg-[#0A66C2] hover:border-[#0A66C2] transition-all">
+                      <LinkedinIcon />
+                    </a>
+                  )}
+                  {member.github && (
+                    <a href={member.github} target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-off-white/80 hover:text-white hover:bg-[#333] hover:border-[#333] transition-all">
+                      <GithubIcon />
+                    </a>
+                  )}
+                  {member.portfolio && (
+                    <a href={member.portfolio} target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-off-white/80 hover:text-white hover:bg-acid-lime hover:border-acid-lime hover:text-stone-900 transition-all">
+                      <PortfolioIcon />
+                    </a>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   );

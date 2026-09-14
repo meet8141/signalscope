@@ -96,7 +96,7 @@ export function CustomCursor() {
   return (
     <>
       {/* Main Dot Outer Container (Handles Position) */}
-      <div ref={dotRef} className="fixed top-0 left-0 pointer-events-none z-[9999]" style={{ willChange: 'transform' }}>
+      <div ref={dotRef} className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block" style={{ willChange: 'transform' }}>
         {/* Main Dot Inner Container (Handles Animations & Visuals) */}
         <div 
           className={`transition-all duration-200 ease-out rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center mix-blend-difference
@@ -107,7 +107,7 @@ export function CustomCursor() {
       </div>
       
       {/* Trailing Ring Outer Container */}
-      <div ref={ringRef} className="fixed top-0 left-0 pointer-events-none z-[9998]" style={{ willChange: 'transform' }}>
+      <div ref={ringRef} className="fixed top-0 left-0 pointer-events-none z-[9998] hidden md:block" style={{ willChange: 'transform' }}>
         {/* Trailing Ring Inner Container */}
         <div 
           className={`transition-all duration-300 ease-out rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center mix-blend-difference
@@ -120,7 +120,7 @@ export function CustomCursor() {
       {/* Click Ripple Effect */}
       {clickEffect && (
         <div 
-          className="fixed top-0 left-0 pointer-events-none z-[9997]"
+          className="fixed top-0 left-0 pointer-events-none z-[9997] hidden md:block"
           style={{ transform: `translate3d(${pos.current.x}px, ${pos.current.y}px, 0)` }}
         >
           <div className="w-8 h-8 border border-acid-lime/60 rounded-full transform -translate-x-1/2 -translate-y-1/2 animate-ping" />

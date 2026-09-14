@@ -21,25 +21,25 @@ function FeatureCard({ title, desc, icon: Icon }) {
 
 function Metric({ value, label }) {
   return (
-    <div className="flex flex-col border-l-2 border-acid-lime pl-6">
-      <span className="font-serif text-5xl text-off-white font-light">
+    <div className="flex flex-col border-l-2 border-acid-lime pl-4 sm:pl-6">
+      <span className="font-serif text-3xl sm:text-5xl text-off-white font-light">
         <AnimatedCounter value={value} />
       </span>
-      <span className="font-mono text-xs tracking-widest uppercase text-off-white/50 mt-2">{label}</span>
+      <span className="font-mono text-[10px] sm:text-xs tracking-widest uppercase text-off-white/50 mt-2">{label}</span>
     </div>
   );
 }
 
 export function LandingPage() {
   return (
-    <div className="pt-32 pb-24">
+    <div className="pt-24 sm:pt-32 pb-24">
       {/* Hero Section */}
-      <section className="px-8 max-w-[1400px] mx-auto text-center min-h-[calc(100vh-8rem)] flex flex-col justify-center items-center mb-32">
-        <h1 className="font-serif text-5xl md:text-7xl font-extralight leading-tight tracking-tight mb-8">
-          Real vs. AI-Generated <br />
+      <section className="px-4 sm:px-8 max-w-[1400px] mx-auto text-center min-h-[calc(100vh-8rem)] flex flex-col justify-center items-center mb-32">
+        <h1 className="font-serif text-4xl sm:text-5xl lg:text-7xl font-extralight leading-tight tracking-tight mb-8">
+          Real vs AI-Generated <br />
           <span className="italic font-light text-acid-lime">Image Detection</span>
         </h1>
-        <p className="font-sans text-xl opacity-60 max-w-2xl mx-auto mb-12 leading-relaxed">
+        <p className="font-sans text-lg sm:text-xl opacity-60 max-w-2xl mx-auto mb-12 leading-relaxed px-4">
           A resilient, multi-layered hybrid verification framework checking cryptographic provenance, metadata integrity, pixel-domain forensics, and deep-model inference.
         </p>
         <Link
@@ -63,10 +63,10 @@ export function LandingPage() {
       </section>
 
       {/* 4 Parallel Layers */}
-      <section className="px-8 max-w-[1400px] mx-auto mb-32">
-        <div className="flex flex-col items-center mb-16">
-          <span className="font-mono text-acid-lime text-sm tracking-widest uppercase mb-4">Core Methodology</span>
-          <h2 className="font-serif text-4xl text-off-white text-center">Four Parallel Layers of Verification</h2>
+      <section className="px-4 sm:px-8 max-w-[1400px] mx-auto mb-32">
+        <div className="flex flex-col items-center mb-12 sm:mb-16 text-center">
+          <span className="font-mono text-acid-lime text-xs sm:text-sm tracking-widest uppercase mb-4">Core Methodology</span>
+          <h2 className="font-serif text-3xl sm:text-4xl text-off-white">Four Parallel Layers of Verification</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -94,11 +94,11 @@ export function LandingPage() {
       </section>
 
       {/* Comprehensive Metrics & Performance Dashboard */}
-      <section className="px-8 max-w-[1400px] mx-auto bg-stone-black/50 border border-white/5 rounded-3xl p-12 lg:p-16 flex flex-col mb-32">
-        <div className="text-center mb-16">
-          <span className="font-mono text-acid-lime text-sm tracking-widest uppercase mb-4 block">Performance & Data Architecture</span>
-          <h2 className="font-serif text-4xl text-off-white mb-6">Comprehensive Benchmarks</h2>
-          <p className="font-sans text-off-white/60 leading-relaxed max-w-3xl mx-auto">
+      <section className="px-4 sm:px-8 max-w-[1400px] mx-auto bg-stone-black/50 border border-white/5 rounded-3xl p-6 sm:p-12 lg:p-16 flex flex-col mb-32 mx-4 sm:mx-8">
+        <div className="text-center mb-12 sm:mb-16">
+          <span className="font-mono text-acid-lime text-xs sm:text-sm tracking-widest uppercase mb-4 block">Performance & Data Architecture</span>
+          <h2 className="font-serif text-3xl sm:text-4xl text-off-white mb-6">Comprehensive Benchmarks</h2>
+          <p className="font-sans text-sm sm:text-base text-off-white/60 leading-relaxed max-w-3xl mx-auto px-2">
             Our MobileNetV2 architecture was fine-tuned specifically for deepfake detection, leveraging transfer learning, inverted residuals, and depthwise convolutions.
           </p>
         </div>
@@ -116,10 +116,10 @@ export function LandingPage() {
           {/* Row 1: Dataset Distribution & Training Strategy */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Dataset Distribution */}
-            <div>
+            <div className="w-full overflow-hidden">
               <h3 className="font-mono text-acid-lime text-xs tracking-widest uppercase mb-6 border-b border-white/10 pb-2">Dataset Distribution (141.6k Total)</h3>
-              <div className="bg-warm-charcoal rounded-xl border border-white/10 overflow-hidden">
-                <table className="w-full text-sm text-left">
+              <div className="bg-warm-charcoal rounded-xl border border-white/10 overflow-x-auto w-full">
+                <table className="w-full text-sm text-left min-w-[350px]">
                   <thead className="bg-stone-black border-b border-white/10 font-mono text-xs uppercase text-off-white/50">
                     <tr>
                       <th className="px-4 py-3">Type</th>
@@ -166,10 +166,10 @@ export function LandingPage() {
           {/* Row 2: Classification Metrics */}
           <div>
             <h3 className="font-mono text-acid-lime text-xs tracking-widest uppercase mb-6 border-b border-white/10 pb-2">Classification Metrics</h3>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="bg-stone-black border border-white/5 rounded-xl p-6 flex flex-col justify-center">
-                <span className="text-off-white/60 text-sm mb-2">Precision</span>
-                <span className="font-mono text-2xl">0.8821</span>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="bg-stone-black border border-white/5 rounded-xl p-4 sm:p-6 flex flex-col justify-center">
+                <span className="text-off-white/60 text-xs sm:text-sm mb-2">Precision</span>
+                <span className="font-mono text-xl sm:text-2xl">0.8821</span>
               </div>
               <div className="bg-stone-black border border-white/5 rounded-xl p-6 flex flex-col justify-center">
                 <span className="text-off-white/60 text-sm mb-2">Recall</span>

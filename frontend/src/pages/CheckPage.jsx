@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Hero } from '../components/Hero';
 import { TabbedContent } from '../components/TabbedContent';
+import { FullReportPrint } from '../components/FullReportPrint';
 import { api } from '../api/client';
 
 export function CheckPage() {
@@ -39,9 +40,12 @@ export function CheckPage() {
   };
 
   return (
-    <div className="pt-20">
-      <Hero onUpload={handleUpload} isUploading={isUploading} results={results} selectedFile={selectedFile} />
-      <TabbedContent results={results} />
-    </div>
+    <>
+      <FullReportPrint results={results} />
+      <div className="pt-20 print:hidden">
+        <Hero onUpload={handleUpload} isUploading={isUploading} results={results} selectedFile={selectedFile} />
+        <TabbedContent results={results} />
+      </div>
+    </>
   );
 }

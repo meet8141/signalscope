@@ -93,10 +93,10 @@ export function MetricsDashboard() {
   const textColor = "#ffffff90";
 
   return (
-    <div className="w-full bg-stone-black/50 border border-white/5 p-8 rounded-3xl">
-      <h2 className="text-3xl font-serif text-off-white mb-8">Model Evaluation Metrics</h2>
+    <div className="w-full bg-stone-black/50 border border-white/5 p-4 sm:p-8 rounded-3xl overflow-hidden">
+      <h2 className="text-2xl sm:text-3xl font-serif text-off-white mb-6 sm:mb-8 text-center sm:text-left">Model Evaluation Metrics</h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-12">
         {/* Training Accuracy */}
         <div className="h-72">
           <h3 className="text-sm font-mono text-acid-lime mb-4 tracking-widest uppercase">Training vs Validation Accuracy</h3>
@@ -204,29 +204,29 @@ export function MetricsDashboard() {
         <div className="h-72 flex flex-col">
           <h3 className="text-sm font-mono text-acid-lime mb-4 tracking-widest uppercase">Confusion Matrix</h3>
           <p className="text-xs text-off-white/50 mb-4 font-mono">Threshold = <AnimatedCounter value="0.545" /></p>
-          <div className="grid grid-cols-3 gap-2 font-mono text-xs text-center text-off-white/70 flex-grow">
+          <div className="grid grid-cols-3 gap-1 sm:gap-2 font-mono text-[9px] sm:text-xs text-center text-off-white/70 flex-grow">
             <div></div>
-            <div className="bg-white/5 p-2 rounded flex items-center justify-center font-bold">Predicted Fake</div>
-            <div className="bg-white/5 p-2 rounded flex items-center justify-center font-bold">Predicted Real</div>
+            <div className="bg-white/5 p-1 sm:p-2 rounded flex items-center justify-center font-bold">Predicted Fake</div>
+            <div className="bg-white/5 p-1 sm:p-2 rounded flex items-center justify-center font-bold">Predicted Real</div>
 
-            <div className="bg-white/5 p-2 rounded flex items-center justify-center font-bold">Actual Fake</div>
-            <div className="bg-stone-black border border-acid-lime/30 text-acid-lime rounded-xl flex flex-col items-center justify-center shadow-[0_0_15px_rgba(212,242,104,0.1)]">
-              <span className="text-3xl font-serif"><AnimatedCounter value="13541" /></span>
-              <span className="text-[10px] uppercase tracking-wider text-off-white/50 mt-1">True Positive</span>
+            <div className="bg-white/5 p-1 sm:p-2 rounded flex items-center justify-center font-bold">Actual Fake</div>
+            <div className="bg-stone-black border border-acid-lime/30 text-acid-lime rounded-xl flex flex-col items-center justify-center shadow-[0_0_15px_rgba(212,242,104,0.1)] p-2">
+              <span className="text-xl sm:text-3xl font-serif"><AnimatedCounter value="13541" /></span>
+              <span className="text-[8px] sm:text-[10px] uppercase tracking-wider text-off-white/50 mt-1">True Positive</span>
             </div>
-            <div className="bg-stone-black border border-red-500/30 text-red-400 rounded-xl flex flex-col items-center justify-center shadow-[0_0_15px_rgba(239,68,68,0.1)]">
-              <span className="text-3xl font-serif"><AnimatedCounter value="1624" /></span>
-              <span className="text-[10px] uppercase tracking-wider text-off-white/50 mt-1">False Negative</span>
+            <div className="bg-stone-black border border-red-500/30 text-red-400 rounded-xl flex flex-col items-center justify-center shadow-[0_0_15px_rgba(239,68,68,0.1)] p-2">
+              <span className="text-xl sm:text-3xl font-serif"><AnimatedCounter value="1624" /></span>
+              <span className="text-[8px] sm:text-[10px] uppercase tracking-wider text-off-white/50 mt-1">False Negative</span>
             </div>
 
-            <div className="bg-white/5 p-2 rounded flex items-center justify-center font-bold">Actual Real</div>
-            <div className="bg-stone-black border border-red-500/30 text-red-400 rounded-xl flex flex-col items-center justify-center shadow-[0_0_15px_rgba(239,68,68,0.1)]">
-              <span className="text-3xl font-serif"><AnimatedCounter value="1009" /></span>
-              <span className="text-[10px] uppercase tracking-wider text-off-white/50 mt-1">False Positive</span>
+            <div className="bg-white/5 p-1 sm:p-2 rounded flex items-center justify-center font-bold">Actual Real</div>
+            <div className="bg-stone-black border border-red-500/30 text-red-400 rounded-xl flex flex-col items-center justify-center shadow-[0_0_15px_rgba(239,68,68,0.1)] p-2">
+              <span className="text-xl sm:text-3xl font-serif"><AnimatedCounter value="1009" /></span>
+              <span className="text-[8px] sm:text-[10px] uppercase tracking-wider text-off-white/50 mt-1">False Positive</span>
             </div>
-            <div className="bg-stone-black border border-acid-lime/30 text-acid-lime rounded-xl flex flex-col items-center justify-center shadow-[0_0_15px_rgba(212,242,104,0.1)]">
-              <span className="text-3xl font-serif"><AnimatedCounter value="12156" /></span>
-              <span className="text-[10px] uppercase tracking-wider text-off-white/50 mt-1">True Negative</span>
+            <div className="bg-stone-black border border-acid-lime/30 text-acid-lime rounded-xl flex flex-col items-center justify-center shadow-[0_0_15px_rgba(212,242,104,0.1)] p-2">
+              <span className="text-xl sm:text-3xl font-serif"><AnimatedCounter value="12156" /></span>
+              <span className="text-[8px] sm:text-[10px] uppercase tracking-wider text-off-white/50 mt-1">True Negative</span>
             </div>
           </div>
         </div>
