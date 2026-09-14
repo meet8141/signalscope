@@ -137,10 +137,13 @@ def _generate_gradcam(image_tensor, model, target_layer):
         ]
     )
 
+    # Construct input dict to match expected structure
+    input_dict = {model.input_names[0]: image_tensor} if hasattr(model, "input_names") and model.input_names else image_tensor
+
     with tf.GradientTape() as tape:
 
         conv_outputs, predictions = grad_model(
-            image_tensor,
+            input_dict,
             training=False
         )
 
@@ -338,8 +341,10 @@ def predict_image(
     # Run prediction
     # ----------------------------------------------------------
 
+    input_dict = {_model.input_names[0]: image_array} if hasattr(_model, "input_names") and _model.input_names else image_array
+
     prediction = _model.predict(
-        image_array, verbose=0
+        input_dict, verbose=0
     )
 
     prediction = np.asarray(prediction)
