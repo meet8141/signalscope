@@ -2,11 +2,27 @@ import { Shield, LogOut } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { logout } from '../firebase';
+import { useState, useRef, useEffect } from 'react';
 
 export function Navbar() {
   const location = useLocation();
   const isCheckPage = location.pathname === '/check';
   const { user } = useAuth();
+  const [imageError, setImageError] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <nav className="fixed top-0 w-full z-50 border-b border-white/5 bg-stone-black/80 backdrop-blur-md">
@@ -34,12 +50,30 @@ export function Navbar() {
 
           {user ? (
             <div className="flex items-center gap-4 ml-2">
-              <div className="flex items-center gap-2">
-                {user.photoURL ? (
-                  <img src={user.photoURL} alt="Profile" className="w-8 h-8 rounded-full border border-white/20" />
-                ) : (
-                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
-                    {user.email?.charAt(0).toUpperCase()}
+              <div className="relative" ref={dropdownRef}>
+                <button 
+                  onClick={() => setShowDropdown(!showDropdown)}
+                  className="flex items-center gap-2 focus:outline-none hover:scale-105 transition-transform"
+                  title="View Profile"
+                >
+                  {user.photoURL && !imageError ? (
+                    <img 
+                      src={user.photoURL} 
+                      alt="Profile" 
+                      className="w-8 h-8 rounded-full border border-white/20 cursor-pointer"
+                      referrerPolicy="no-referrer"
+                      onError={() => setImageError(true)}
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/20 cursor-pointer">
+                      {user.email?.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                </button>
+
+                {showDropdown && (
+                  <div className="absolute right-0 mt-3 py-2.5 px-4 bg-stone-black border border-white/10 rounded-xl shadow-2xl backdrop-blur-md z-50 whitespace-nowrap animate-in fade-in slide-in-from-top-2 duration-200">
+                    <p className="text-white/80 font-mono text-xs">{user.email}</p>
                   </div>
                 )}
               </div>
