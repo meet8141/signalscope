@@ -133,102 +133,71 @@ def calculate_trust_score(
     forensic_results: dict = None
 ) -> int:
     """
-    Calculates a 0-100 trust score using weighted signals.
+    Calculates a 0-100 trust score using dynamic weighted signals.
 
-    Weights:
-        - 85%  Model confidence (real_probability)
-        -  5%  C2PA provenance
-        -  5%  Metadata integrity
-        -  5%  Noise analysis
+    Dynamic Weights (Mitigates CNN resizing artifacts on large images):
+        If pristine metadata is present and noise analysis passes:
+            - 10%  Model confidence (Aggressively overridden by EXIF)
+            - 70%  Metadata integrity
+            - 10%  Noise analysis
+            - 10%  C2PA provenance
+        Else (Default):
+            - 85%  Model confidence
+            -  5%  C2PA provenance
+            -  5%  Metadata integrity
+            -  5%  Noise analysis
 
     Higher score = more likely authentic / real.
     """
 
     score = 0.0
 
+    # Extract indicators safely (Fixed dictionary key bugs)
+    has_c2pa = False
+    if c2pa_result and c2pa_result.get("status") != "failed":
+        has_c2pa = bool(c2pa_result.get("c2pa_detected", False))
+
+    has_exif = False
+    if metadata_result and metadata_result.get("status") != "failed":
+        # Ensure we actually have meaningful EXIF data
+        has_exif = bool(metadata_result.get("camera_exif"))
+    
+    noise_flag = False
+    if forensic_results:
+        noise_data = forensic_results.get("noise_analysis", {})
+        noise_flag = noise_data.get("manipulation_detected", False)
+        
+    real_prob = 0.0
+    if model_result and model_result.get("status") != "failed":
+        real_prob = model_result.get("real_probability", 0.0)
 
     # --------------------------------------------------------
-    # 1. MODEL CONFIDENCE (85%)
+    # DYNAMIC WEIGHTING LOGIC
     # --------------------------------------------------------
 
-    if (
-        model_result
-        and model_result.get("status") != "failed"
-    ):
-
-        # real_probability: 1.0 = definitely real
-        real_prob = model_result.get(
-            "real_probability", 0.0
-        )
-
+    # Aggressive Metadata Override:
+    # If the image has intact EXIF data and no noise manipulation detected, 
+    # it is highly likely a real photo from a camera.
+    # We aggressively reduce the model's weight to prevent resizing artifacts from causing false positives.
+    if has_exif and not noise_flag:
+        # Dynamic weights: Model 10%, EXIF 70%, Noise 10%, C2PA 10%
+        score += real_prob * 10.0
+        score += 70.0  # For EXIF
+        score += 10.0  # For passing noise
+        if has_c2pa:
+            score += 10.0
+    else:
+        # Default weights: Model 85%, C2PA 5%, EXIF 5%, Noise 5%
         score += real_prob * 85.0
-
-    # If model failed, this 85% stays at 0
-
-
-    # --------------------------------------------------------
-    # 2. C2PA PROVENANCE (5%)
-    # --------------------------------------------------------
-
-    if (
-        c2pa_result
-        and c2pa_result.get("status") != "failed"
-    ):
-
-        # C2PA present and valid = full 5 points
-        has_c2pa = c2pa_result.get(
-            "has_c2pa", False
-        )
-
         if has_c2pa:
             score += 5.0
-
-    # No C2PA data = 0 out of 5
-
-
-    # --------------------------------------------------------
-    # 3. METADATA INTEGRITY (5%)
-    # --------------------------------------------------------
-
-    if (
-        metadata_result
-        and metadata_result.get("status") != "failed"
-    ):
-
-        # Metadata present with EXIF = full 5 points
-        has_exif = metadata_result.get(
-            "has_exif", False
-        )
-
         if has_exif:
             score += 5.0
-
-    # No metadata = 0 out of 5
-
-
-    # --------------------------------------------------------
-    # 4. NOISE ANALYSIS (5%)
-    # --------------------------------------------------------
-
-    if forensic_results:
-
-        noise_data = forensic_results.get(
-            "noise_analysis", {}
-        )
-
-        noise_flag = noise_data.get(
-            "manipulation_detected", False
-        )
-
-        # No manipulation detected = full 5 points
         if not noise_flag:
             score += 5.0
 
-    # Noise manipulation detected = 0 out of 5
-
-
     # Keep score between 0 and 100
-    return max(0, min(100, round(score)))
+    return max(0, min(100, int(round(score))))
 
 
 # ============================================================
