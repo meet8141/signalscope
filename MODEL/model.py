@@ -7,6 +7,11 @@ import os
 import traceback
 import numpy as np
 import tensorflow as tf
+import warnings
+
+# Suppress harmless Keras 3 input structure warnings for single-input models
+warnings.filterwarnings("ignore", message=".*The structure of `inputs` doesn't match the expected structure.*")
+
 
 from PIL import Image
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
@@ -137,13 +142,10 @@ def _generate_gradcam(image_tensor, model, target_layer):
         ]
     )
 
-    # Construct input dict to match expected structure
-    input_dict = {model.input_names[0]: image_tensor} if hasattr(model, "input_names") and model.input_names else image_tensor
-
     with tf.GradientTape() as tape:
 
         conv_outputs, predictions = grad_model(
-            input_dict,
+            image_tensor,
             training=False
         )
 
@@ -341,10 +343,8 @@ def predict_image(
     # Run prediction
     # ----------------------------------------------------------
 
-    input_dict = {_model.input_names[0]: image_array} if hasattr(_model, "input_names") and _model.input_names else image_array
-
     prediction = _model.predict(
-        input_dict, verbose=0
+        image_array, verbose=0
     )
 
     prediction = np.asarray(prediction)
