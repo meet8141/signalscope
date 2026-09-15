@@ -20,6 +20,7 @@ export function GlobalBackButton() {
           Back to Home
         </Link>
       </div>
+      <br />
     </div>
   );
 }
