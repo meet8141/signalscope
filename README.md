@@ -1,7 +1,22 @@
 # 🔍 SignalScope: Real vs. AI-Generated Image Detection Pipeline
 
-
 > **🎯 About:** A high-accuracy, multi-layered forensic pipeline designed to detect AI-generated images using deep learning (MobileNetV2), metadata analysis, and pixel-level forensics.
+
+**🌐 Live Demo:** [https://signalscope-1.onrender.com/](https://signalscope-1.onrender.com/)
+
+---
+
+## 🎥 Video Demonstration
+
+<!-- Note: You can replace the path/to/your/video.mp4 below with the actual relative path in the repo, or an external URL to the raw video file. -->
+<div align="center">
+  <video width="600" controls autoplay muted loop playsinline>
+    <source src="https://drive.google.com/uc?export=download&id=1Nyacmk9I37nZIud4sxSqwprJFRDfhNYA" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <br/>
+  <p><em>Watch the complete pipeline in action, demonstrating both real and AI-generated image analysis.</em></p>
+</div>
 
 ---
 
