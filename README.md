@@ -10,7 +10,7 @@
 
 <!-- Note: You can replace the path/to/your/video.mp4 below with the actual relative path in the repo, or an external URL to the raw video file. -->
 <div align="center">
-  <video width="600" controls autoplay muted loop <source src="https://github.com/user-attachments/assets/e70229d8-3a48-426b-b6f0-f743d00c65f7">
+  <video width="600" controls aautoplay loop muted playsinline width="100%" <source src="https://github.com/user-attachments/assets/e70229d8-3a48-426b-b6f0-f743d00c65f7">
     Your browser does not support the video tag.
   </video>
   <br/>
