@@ -10,7 +10,8 @@
 
 <!-- Note: You can replace the path/to/your/video.mp4 below with the actual relative path in the repo, or an external URL to the raw video file. -->
 <div align="center">
-  <video width="600" controls autoplay muted loop playsi    <source src="https://github.com/user-attachments/assets/e70229d8-3a48-426b-b6f0-f743d00c65f7">
+  <video width="600" controls autoplay muted loop playsinline>
+    <source src="https://github.com/user-attachments/assets/e70229d8-3a48-426b-b6f0-f743d00c65f7">
     Your browser does not support the video tag.
   </video>
   <br/>
@@ -22,28 +23,28 @@
 ## 1. Core + Bonus Modules Built
 **Core Module:** Real-vs-AI-generated image classification.
 **Bonus Modules Included:**
-* Faithful Explanation:** Explanations provided via Grad-CAM visual diagnostics highlighting synthetic artifacts via feature map gradients.
-*   `Robustness to Degradation:** Maintained accuracy tracking across JPEG compression and resizing, supported by empirical degradation-vs-accuracy analysis.
-*   Provenance & Metadata:** Built-in cryptographic authentication via C2PA manifests and EXIF hardware profiling.
-*    Real-Time / Deployable:** Fully deployed web app with a React frontend and FastAPI backend.
+*   **Faithful Explanation:** Explanations provided via Grad-CAM visual diagnostics highlighting synthetic artifacts via feature map gradients.
+*   **Robustness to Degradation:** Maintained accuracy tracking across JPEG compression and resizing, supported by empirical degradation-vs-accuracy analysis.
+*   **Provenance & Metadata:** Built-in cryptographic authentication via C2PA manifests and EXIF hardware profiling.
+*   **Real-Time / Deployable:** Fully deployed web app with a React frontend and FastAPI backend.
 
 ## 2. Setup and Run Instructions (Reproducibility)
 To run the project locally and reproduce predictions in under 10 minutes:
 
 ### Backend Setup (FastAPI)
-`Bash
+```bash
 cd backend
 pip install -r ../requirements.txt
 uvicorn main:app --reload
-`
+```
 *API available at http://localhost:8000. You can access interactive Swagger docs at http://localhost:8000/docs.*
 
 ### Frontend Setup (React + Vite)
-`ash
+```bash
 cd frontend
 npm install
 npm run dev
-`
+```
 *Frontend available at http://localhost:5173.*
 
 ## 3. Datasets Used (Sources/Licenses)
@@ -95,7 +96,6 @@ For an in-depth understanding of the architecture, research, and technical decis
 *   [Model Training & Evaluation](docs/_Model_Training.md)
 *   [Explainability (Grad-CAM)](docs/_Explainability.md)
 *   [Limitations & Future Work](docs/_Limitations.md)
-re, and spectral analysis when provenance is inconclusive.
 
 
 ---
