@@ -102,15 +102,21 @@ export function UploadZone({ onUpload, isUploading, results }) {
       />
 
       {error && (
-        <div className="absolute top-4 left-4 right-4 z-50 bg-stone-black/95 border border-red-500/50 text-red-200 p-4 rounded-xl flex items-start gap-3 backdrop-blur-xl shadow-2xl">
-          <XCircle className="text-red-400 shrink-0 mt-0.5" size={18} />
+        <div className="absolute top-4 left-4 right-4 z-50 bg-gradient-to-r from-red-950/90 to-stone-black/95 border border-red-500/50 text-red-200 p-4 rounded-xl flex items-start gap-3 backdrop-blur-xl shadow-[0_0_30px_rgba(239,68,68,0.15)] animate-in slide-in-from-top-4 fade-in duration-300">
+          <div className="relative shrink-0 mt-0.5">
+            <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-20"></div>
+            <XCircle className="text-red-400 relative z-10" size={20} />
+          </div>
           <p className="font-sans text-sm font-medium leading-relaxed">{error}</p>
         </div>
       )}
 
       {warning && !error && (
-        <div className="absolute top-4 left-4 right-4 z-50 bg-stone-black/95 border border-yellow-500/50 text-yellow-100 p-4 rounded-xl flex items-start gap-3 backdrop-blur-xl shadow-2xl">
-          <AlertTriangle className="text-yellow-400 shrink-0 mt-0.5" size={18} />
+        <div className="absolute top-4 left-4 right-4 z-50 bg-gradient-to-r from-yellow-950/90 to-stone-black/95 border border-yellow-500/50 text-yellow-100 p-4 rounded-xl flex items-start gap-3 backdrop-blur-xl shadow-[0_0_30px_rgba(234,179,8,0.15)] animate-in slide-in-from-top-4 fade-in duration-300">
+          <div className="relative shrink-0 mt-0.5">
+            <div className="absolute inset-0 bg-yellow-500 rounded-full animate-ping opacity-20 duration-1000"></div>
+            <AlertTriangle className="text-yellow-400 relative z-10" size={20} />
+          </div>
           <p className="font-sans text-sm font-medium leading-relaxed">{warning}</p>
         </div>
       )}

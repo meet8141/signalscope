@@ -37,10 +37,7 @@ const teamMembers = [
 export function TeamPage() {
   return (
     <div className="pt-32 pb-24 px-8 max-w-[1400px] mx-auto w-full relative z-10">
-      <Link to="/" className="inline-flex items-center gap-2 text-off-white/60 hover:text-acid-lime transition-colors mb-12 font-mono text-sm tracking-wider uppercase">
-        <ArrowLeft size={16} />
-        Back to Scanner
-      </Link>
+
 
       <div className="mb-16">
         <h1 className="font-serif text-6xl md:text-8xl font-extralight tracking-tight mb-6">

@@ -27,9 +27,7 @@ Based on our extensive benchmarking using a dataset of over 140,000 images, the 
 export function FAQPage() {
   return (
     <div className="pt-32 pb-24 px-8 max-w-[1400px] mx-auto w-full relative z-10">
-      <Link to="/" className="inline-block text-acid-lime hover:underline mb-8 font-mono text-sm uppercase tracking-wider">
-        ← Back to Home
-      </Link>
+
       <h1 className="font-serif text-5xl md:text-7xl font-extralight mb-12">FAQ</h1>
       
       <section className="prose prose-invert max-w-none prose-headings:font-serif prose-headings:font-light prose-a:text-acid-lime hover:prose-a:text-white transition-colors">

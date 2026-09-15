@@ -14,7 +14,7 @@ export function PerformancePage() {
       <section className="prose prose-invert max-w-none mb-8 prose-headings:font-serif prose-headings:font-light prose-a:text-acid-lime hover:prose-a:text-white transition-colors prose-pre:bg-white/5 prose-pre:border prose-pre:border-white/10">
         <ReactMarkdown>{evaluation}</ReactMarkdown>
       </section>
-      <Link to="/" className="mt-12 inline-block text-acid-lime hover:underline">← Back to Home</Link>
+
     </div>
   );
 }

@@ -7,9 +7,7 @@ import { Link } from 'react-router-dom';
 export function DeveloperPage() {
   return (
     <div className="pt-32 pb-24 px-8 max-w-[1400px] mx-auto w-full relative z-10">
-      <Link to="/" className="inline-block text-acid-lime hover:underline mb-8 font-mono text-sm uppercase tracking-wider">
-        ← Back to Home
-      </Link>
+
       <h1 className="font-serif text-5xl md:text-7xl font-extralight mb-12">Developer Documentation</h1>
       
       <div className="space-y-16">

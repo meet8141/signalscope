@@ -9,14 +9,17 @@ export function GlobalBackButton() {
   }
 
   return (
-    <div className="absolute top-24 left-4 sm:left-8 z-40">
-      <Link
-        to="/"
-        className="flex items-center justify-center w-11 h-11 rounded-full border border-white/10 bg-stone-black/80 backdrop-blur-md text-off-white/60 hover:text-stone-black hover:bg-acid-lime hover:border-acid-lime transition-all hover:scale-105 shadow-xl"
-        title="Back to Home"
-      >
-        <ArrowLeft size={20} />
-      </Link>
+    <div className="w-full max-w-[1400px] mx-auto relative z-40">
+      <div className="absolute top-24 left-4 sm:left-8">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-acid-lime hover:opacity-75 transition-opacity font-mono text-sm uppercase tracking-wider"
+          title="Back to Home"
+        >
+          <ArrowLeft size={16} />
+          Back to Home
+        </Link>
+      </div>
     </div>
   );
 }

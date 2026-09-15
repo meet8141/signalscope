@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import dataset from '../../../docs/_Dataset.md?raw';
-import { Link } from 'react-router-dom';
 
 export function DatasetPage() {
   return (
@@ -10,7 +9,6 @@ export function DatasetPage() {
       <section className="prose prose-invert max-w-none mb-8 prose-headings:font-serif prose-headings:font-light prose-a:text-acid-lime hover:prose-a:text-white transition-colors prose-pre:bg-white/5 prose-pre:border prose-pre:border-white/10">
         <ReactMarkdown>{dataset}</ReactMarkdown>
       </section>
-      <Link to="/" className="mt-12 inline-block text-acid-lime hover:underline">← Back to Home</Link>
     </div>
   );
 }
