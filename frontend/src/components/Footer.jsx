@@ -52,9 +52,9 @@ export function Footer() {
           <div>
             <h4 className="font-mono text-xs tracking-widest uppercase text-off-white/70 mb-6 border-b border-white/5 pb-2">Platform</h4>
             <ul className="space-y-4 font-sans text-sm text-off-white/50">
-              <li><a href="/architecture" target="_blank" rel="noopener noreferrer" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">Architecture Overview</a></li>
-              <li><a href="/performance" target="_blank" rel="noopener noreferrer" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">Performance Benchmarks</a></li>
-              <li><a href="/developer" target="_blank" rel="noopener noreferrer" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">Developer Documentation</a></li>
+              <li><Link to="/architecture" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">Architecture Overview</Link></li>
+              <li><Link to="/performance" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">Performance Benchmarks</Link></li>
+              <li><Link to="/developer" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">Developer Documentation</Link></li>
             </ul>
           </div>
 
@@ -62,8 +62,8 @@ export function Footer() {
           <div>
             <h4 className="font-mono text-xs tracking-widest uppercase text-off-white/70 mb-6 border-b border-white/5 pb-2">Resources</h4>
             <ul className="space-y-4 font-sans text-sm text-off-white/50">
-              <li><a href="/research" target="_blank" rel="noopener noreferrer" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">Research Methodology</a></li>
-              <li><a href="/dataset" target="_blank" rel="noopener noreferrer" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">Dataset Access (Kaggle)</a></li>
+              <li><Link to="/research" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">Research Methodology</Link></li>
+              <li><Link to="/dataset" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">Dataset Access (Kaggle)</Link></li>
             </ul>
           </div>
 
@@ -71,8 +71,8 @@ export function Footer() {
           <div>
             <h4 className="font-mono text-xs tracking-widest uppercase text-off-white/70 mb-6 border-b border-white/5 pb-2">Connect</h4>
             <ul className="space-y-4 font-sans text-sm text-off-white/50">
-              <li><a href="/faq" target="_blank" rel="noopener noreferrer" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">FAQ</a></li>
-              <li><a href="/team" target="_blank" rel="noopener noreferrer" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">Team</a></li>
+              <li><Link to="/faq" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">FAQ</Link></li>
+              <li><Link to="/team" className="hover:text-acid-lime hover:translate-x-1 transition-all inline-block">Team</Link></li>
             </ul>
           </div>
 
@@ -87,7 +87,7 @@ export function Footer() {
               className="flex items-center gap-2 hover:text-acid-lime transition-colors"
             >
               <Users size={14} />
-              MEET THE TEAM
+              MEET THE buildBeyond
               <ChevronRight size={14} />
             </Link>
             <p className="hidden md:block">Designed with precision. Built for truth.</p>

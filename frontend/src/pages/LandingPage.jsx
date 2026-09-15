@@ -51,7 +51,10 @@ export function LandingPage() {
         </Link>
 
         {/* Scroll Indicator */}
-        <div className="mt-8 flex flex-col items-center justify-center opacity-80 cursor-pointer">
+        <div 
+          className="mt-8 flex flex-col items-center justify-center opacity-80 cursor-pointer"
+          onClick={() => document.getElementById('explore')?.scrollIntoView({ behavior: 'smooth' })}
+        >
           <span className="text-[10px] font-mono uppercase tracking-widest text-off-white/40 mb-4">Scroll to Explore</span>
           <div className="flex flex-col items-center">
             <div className="relative w-px h-10 bg-white/10 overflow-hidden mb-2">
@@ -63,7 +66,7 @@ export function LandingPage() {
       </section>
 
       {/* 4 Parallel Layers */}
-      <section className="px-4 sm:px-8 max-w-[1400px] mx-auto mb-32">
+      <section id="explore" className="px-4 sm:px-8 max-w-[1400px] mx-auto mb-32">
         <div className="flex flex-col items-center mb-12 sm:mb-16 text-center">
           <span className="font-mono text-acid-lime text-xs sm:text-sm tracking-widest uppercase mb-4">Core Methodology</span>
           <h2 className="font-serif text-3xl sm:text-4xl text-off-white">Four Parallel Layers of Verification</h2>

@@ -27,11 +27,11 @@ const PortfolioIcon = () => (
 
 const teamMembers = [
   { name: 'Akshar Patel', image: '/images/akshar.png', role: 'Team Leader', linkedin: 'https://linkedin.com/in/akshar-patel-a83611344', github: 'https://github.com/aksharpatel007', portfolio: 'https://aksharpatel007.github.io/Portfolio/' },
-  { name: 'Riya Savaliya', image: '/images/riya.png', role: 'QA Contributor', linkedin: 'https://www.linkedin.com/in/riya-savaliya-9032ba382/', github: 'https://github.com/riyasavalia09/', portfolio: '' },
   { name: 'Meet Patel', image: '/images/meet.jpeg', role: 'Core Developer', linkedin: 'https://www.linkedin.com/in/meet-patel-93a3b12a7/', github: 'https://github.com/meet8141', portfolio: 'https://meetpatel8141.vercel.app/' },
+  { name: 'Riya Savaliya', image: '/images/riya.png', role: 'QA Contributor', linkedin: 'https://www.linkedin.com/in/riya-savaliya-9032ba382/', github: 'https://github.com/riyasavalia09/', portfolio: '' },
   { name: 'Priyal Ramani', image: '/images/priyal.jpeg', role: 'UI/UX Desginer', linkedin: 'https://www.linkedin.com/in/priyal-ramani-197417329/', github: 'https://github.com/priyal63/', portfolio: '' },
-  { name: 'Deep Vanani', image: '/images/deep.png', role: 'UI Prototype', linkedin: 'https://www.linkedin.com/in/dip-vanani-754a94362', github: '', portfolio: '' },
   { name: 'Varshil Savaliya', image: '/images/varshil.png', role: 'Helper Hand', linkedin: 'linkedin.com/in/varshil-savaliya-234a8b315', github: '', portfolio: '' },
+  { name: 'Deep Vanani', image: '/images/deep.png', role: 'UI Prototype', linkedin: 'https://www.linkedin.com/in/dip-vanani-754a94362', github: '', portfolio: '' },
 ];
 
 export function TeamPage() {
@@ -57,22 +57,22 @@ export function TeamPage() {
           return (
             <div key={idx} className={`bg-warm-charcoal p-6 rounded-2xl border transition-all duration-300 group relative overflow-hidden flex flex-col xl:flex-row items-center xl:items-start gap-6 h-full ${isLeader
               ? 'border-acid-lime shadow-[0_0_30px_rgba(212,242,104,0.15)]'
-              : 'border-white/10 hover:border-acid-lime/50'
+              : 'border-white/10 md:hover:border-acid-lime/50'
               }`}>
 
-              <div className="absolute top-0 right-0 w-48 h-48 bg-acid-lime/5 rounded-bl-full -z-10 group-hover:scale-150 transition-transform duration-700"></div>
+              <div className="absolute top-0 right-0 w-48 h-48 bg-acid-lime/5 rounded-bl-full -z-10 md:group-hover:scale-150 transition-transform duration-700"></div>
               {isLeader && (
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-acid-lime to-transparent opacity-70"></div>
               )}
 
               {/* Left side: Rectangular Image */}
-              <div className={`shrink-0 overflow-hidden rounded-xl border border-white/10 group-hover:border-acid-lime/50 transition-colors w-32 h-40`}>
-                <img src={member.image} alt={member.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100" />
+              <div className={`shrink-0 overflow-hidden rounded-xl border border-white/10 md:group-hover:border-acid-lime/50 transition-colors w-32 h-40`}>
+                <img src={member.image} alt={member.name} className="w-full h-full object-cover transition-all duration-500 scale-105 md:group-hover:scale-100" />
               </div>
 
               {/* Right side: Details */}
               <div className="flex flex-col h-full flex-grow text-center xl:text-left py-2 w-full">
-                <h4 className={`font-sans font-medium text-off-white group-hover:text-acid-lime transition-colors mb-2 text-2xl`}>{member.name}</h4>
+                <h4 className={`font-sans font-medium text-off-white md:group-hover:text-acid-lime transition-colors mb-2 text-2xl`}>{member.name}</h4>
 
                 <div className="font-mono text-sm text-off-white/70 uppercase tracking-widest mb-4 flex items-center justify-center xl:justify-start gap-2 flex-wrap">
                   <span className={isLeader ? "text-acid-lime" : ""}>{member.role}</span>

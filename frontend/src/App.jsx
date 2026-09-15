@@ -13,6 +13,8 @@ import { FAQPage } from './pages/FAQPage';
 import { LoginPage } from './pages/LoginPage';
 import { Footer } from './components/Footer';
 import { CustomCursor } from './components/CustomCursor';
+import { ScrollToTop } from './components/ScrollToTop';
+import { GlobalBackButton } from './components/GlobalBackButton';
 import { api } from './api/client';
 import { AuthProvider } from './contexts/AuthContext';
 
@@ -32,9 +34,11 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <CustomCursor />
-        <div className="min-h-screen bg-stone-black text-off-white selection:bg-acid-lime selection:text-stone-black overflow-x-hidden flex flex-col">
+        <div className="relative min-h-screen bg-stone-black text-off-white selection:bg-acid-lime selection:text-stone-black overflow-x-hidden flex flex-col">
           <Navbar />
+          <GlobalBackButton />
           
           <main className="flex-grow flex flex-col">
             <Routes>

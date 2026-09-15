@@ -102,16 +102,16 @@ export function UploadZone({ onUpload, isUploading, results }) {
       />
 
       {error && (
-        <div className="absolute top-4 left-4 right-4 z-40 bg-red-500/20 border border-red-500/50 text-red-600 p-4 rounded-lg flex items-start gap-3 backdrop-blur-md shadow-2xl">
+        <div className="absolute top-4 left-4 right-4 z-50 bg-stone-black/95 border border-red-500/50 text-red-200 p-4 rounded-xl flex items-start gap-3 backdrop-blur-xl shadow-2xl">
           <XCircle className="text-red-400 shrink-0 mt-0.5" size={18} />
-          <p className="font-sans text-sm font-medium">{error}</p>
+          <p className="font-sans text-sm font-medium leading-relaxed">{error}</p>
         </div>
       )}
 
       {warning && !error && (
-        <div className="absolute top-4 left-4 right-4 z-40 bg-yellow-500/20 border border-yellow-500/50 text-yellow-200 p-4 rounded-lg flex items-start gap-3 backdrop-blur-md shadow-2xl">
+        <div className="absolute top-4 left-4 right-4 z-50 bg-stone-black/95 border border-yellow-500/50 text-yellow-100 p-4 rounded-xl flex items-start gap-3 backdrop-blur-xl shadow-2xl">
           <AlertTriangle className="text-yellow-400 shrink-0 mt-0.5" size={18} />
-          <p className="font-sans text-sm font-medium">{warning}</p>
+          <p className="font-sans text-sm font-medium leading-relaxed">{warning}</p>
         </div>
       )}
 
