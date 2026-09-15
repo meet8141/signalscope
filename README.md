@@ -22,16 +22,16 @@
 ## 1. Core + Bonus Modules Built
 **Core Module:** Real-vs-AI-generated image classification.
 **Bonus Modules Included:**
-* Faithful Explanation:** Explanations provided via Grad-CAM visual diagnostics highlighting synthetic artifacts via feature map gradients.
-*   `Robustness to Degradation:** Maintained accuracy tracking across JPEG compression and resizing, supported by empirical degradation-vs-accuracy analysis.
-*   Provenance & Metadata:** Built-in cryptographic authentication via C2PA manifests and EXIF hardware profiling.
-*    Real-Time / Deployable:** Fully deployed web app with a React frontend and FastAPI backend.
+*   **Faithful Explanation:** Explanations provided via Grad-CAM visual diagnostics highlighting synthetic artifacts via feature map gradients.
+*   **Robustness to Degradation:** Maintained accuracy tracking across JPEG compression and resizing, supported by empirical degradation-vs-accuracy analysis.
+*   **Provenance & Metadata:** Built-in cryptographic authentication via C2PA manifests and EXIF hardware profiling.
+*   **Real-Time / Deployable:** Fully deployed web app with a React frontend and FastAPI backend.
 
 ## 2. Setup and Run Instructions (Reproducibility)
 To run the project locally and reproduce predictions in under 10 minutes:
 
 ### Backend Setup (FastAPI)
-`Bash
+```bash
 cd backend
 pip install -r ../requirements.txt
 uvicorn main:app --reload
@@ -99,7 +99,7 @@ For an in-depth understanding of the architecture, research, and technical decis
 
 ---
 
-## 8. Originality & Third-Party References
+## 6. Originality & Third-Party References
 **Originality Declaration:**
 All substantive code, pipeline design, and integration logic in this repository were developed originally by the team during the hackathon timeframe.
 
