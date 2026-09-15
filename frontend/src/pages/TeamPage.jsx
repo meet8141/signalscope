@@ -30,7 +30,7 @@ const teamMembers = [
   { name: 'Meet Patel', image: '/images/meet.jpeg', role: 'Core Developer', linkedin: 'https://www.linkedin.com/in/meet-patel-93a3b12a7/', github: 'https://github.com/meet8141', portfolio: 'https://meetpatel8141.vercel.app/' },
   { name: 'Riya Savaliya', image: '/images/riya.png', role: 'QA Contributor', linkedin: 'https://www.linkedin.com/in/riya-savaliya-9032ba382/', github: 'https://github.com/riyasavalia09/', portfolio: '' },
   { name: 'Priyal Ramani', image: '/images/priyal.jpeg', role: 'UI/UX Desginer', linkedin: 'https://www.linkedin.com/in/priyal-ramani-197417329/', github: 'https://github.com/priyal63/', portfolio: '' },
-  { name: 'Varshil Savaliya', image: '/images/varshil.png', role: 'Helper Hand', linkedin: 'linkedin.com/in/varshil-savaliya-234a8b315', github: '', portfolio: '' },
+  { name: 'Varshil Savaliya', image: '/images/varshil.png', role: 'Helper Hand', linkedin: 'linkedin.com/in/varshil-savaliya-234a8b315', github: 'https://github.com/varshil0611/', portfolio: '' },
   { name: 'Deep Vanani', image: '/images/deep.png', role: 'UI Prototype', linkedin: 'https://www.linkedin.com/in/dip-vanani-754a94362', github: '', portfolio: '' },
 ];
 
