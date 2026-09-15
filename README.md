@@ -11,7 +11,7 @@
 <!-- Note: You can replace the path/to/your/video.mp4 below with the actual relative path in the repo, or an external URL to the raw video file. -->
 <div align="center">
   <video width="600" controls autoplay muted loop playsinline>
-    <source src="https://drive.google.com/uc?export=download&id=1Nyacmk9I37nZIud4sxSqwprJFRDfhNYA" type="video/mp4">
+    <source src="SIH_Final.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
   <br/>
