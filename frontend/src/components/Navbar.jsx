@@ -27,9 +27,9 @@ export function Navbar() {
 
   return (
     <nav className="fixed top-0 w-full z-[100] border-b border-white/5 bg-stone-black/80 backdrop-blur-md">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-8 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 text-off-white hover:text-acid-lime transition-colors">
-          <Shield className="text-acid-lime" size={28} />
+          <img src="/images/logo.svg" alt="SignalScope" className="h-12 w-auto" />
           <span className="font-serif text-xl tracking-tight">Signal<span className="font-bold">Scope</span></span>
         </Link>
 

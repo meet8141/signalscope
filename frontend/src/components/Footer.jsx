@@ -32,7 +32,7 @@ export function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-6">
-              <ShieldCheck className="w-6 h-6 text-acid-lime" />
+              <img src="/images/logo.svg" alt="SignalScope" className="h-10 w-auto" />
               <span className="font-serif text-2xl text-off-white">SignalScope</span>
             </div>
             <p className="font-sans text-sm text-off-white/50 mb-6 leading-relaxed">
