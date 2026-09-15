@@ -87,9 +87,9 @@ export function TabbedContent({ results }) {
             </p>
             <button
               onClick={() => window.print()}
-              className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-acid-lime text-stone-black font-serif text-base sm:text-lg md:text-xl rounded-full hover:bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(212,242,104,0.3)] transition-all duration-300 w-full sm:w-auto justify-center"
+              className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-acid-lime text-acid-lime bg-transparent font-serif text-base sm:text-lg md:text-xl rounded-full hover:bg-acid-lime hover:text-stone-black hover:shadow-[0_0_30px_rgba(212,242,104,0.2)] transition-all duration-300 w-full sm:w-auto justify-center"
             >
-              <Download size={20} />
+              <Download size={20} className="transition-transform group-hover:-translate-y-1" />
               Download Full Report
             </button>
           </div>

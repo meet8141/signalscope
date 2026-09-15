@@ -36,15 +36,16 @@ export function StickyNoteCTA({ results, selectedFile }) {
           <div className="flex flex-col gap-6 w-full max-w-sm mt-4">
             <button
               onClick={() => window.print()}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 sm:py-4 bg-acid-lime text-stone-black font-serif text-base sm:text-lg rounded-full hover:bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(212,242,104,0.3)] transition-all duration-300 w-full"
+              className="group inline-flex items-center justify-center gap-2 px-6 py-3 sm:py-4 border border-acid-lime text-acid-lime bg-transparent font-serif text-base sm:text-lg rounded-full hover:bg-acid-lime hover:text-stone-black hover:shadow-[0_0_30px_rgba(212,242,104,0.2)] transition-all duration-300 w-full"
             >
-              <Download size={20} />
+              <Download size={20} className="transition-transform group-hover:-translate-y-1" />
               Download Full Report
             </button>
-            <div 
+            <div
               onClick={() => document.getElementById('analysis')?.scrollIntoView({ behavior: 'smooth' })}
               className="flex cursor-pointer items-center justify-between border-t border-white/20 pt-4 opacity-50 transition-opacity hover:opacity-100 w-full"
             >
+
               <span className="font-sans text-sm font-bold uppercase tracking-wider">Full Diagnostics Below</span>
               <ArrowRight size={18} className="rotate-90" />
             </div>
@@ -59,12 +60,22 @@ export function StickyNoteCTA({ results, selectedFile }) {
           <p className="font-sans text-xl opacity-60 max-w-md mb-12 leading-relaxed">
             Run comprehensive forensic analysis on media assets in milliseconds. Upload a signal to begin.
           </p>
-          <div className="flex items-center justify-between border-t border-white/20 pt-4 opacity-50 max-w-sm">
-            <span className="font-sans text-sm font-bold uppercase tracking-wider">Awaiting Input</span>
-            <ArrowRight size={18} className="animate-pulse" />
+          <div className="flex flex-col gap-6 w-full max-w-sm mt-4">
+            <button
+              disabled
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 sm:py-4 border border-white/20 text-off-white/30 bg-transparent font-serif text-base sm:text-lg rounded-full cursor-not-allowed w-full transition-all"
+            >
+              <Download size={20} className="opacity-50" />
+              Download Full Report
+            </button>
+            <div className="flex items-center justify-between border-t border-white/20 pt-4 opacity-50 w-full">
+              <span className="font-sans text-sm font-bold uppercase tracking-wider">Awaiting Input</span>
+              <ArrowRight size={18} className="animate-pulse" />
+            </div>
           </div>
         </>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 }
