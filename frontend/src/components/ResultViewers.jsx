@@ -390,9 +390,9 @@ export function ModelViewer({ data }) {
           <GridItem label="GradCAM Available" value={data.gradcam_available ? 'Yes' : 'No'} />
           <GridItem label="Target Layer" value={data.gradcam_layer} isMono />
           {data.heatmap_file && (
-             <div className="mt-4 p-4 bg-stone-black rounded-lg border border-white/5 flex items-center justify-between">
-                <span className="font-sans text-sm opacity-80">Heatmap Generated</span>
-                <span className="font-mono text-xs text-acid-lime">{data.heatmap_file}</span>
+             <div className="mt-4 p-4 bg-stone-black rounded-lg border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <span className="font-sans text-sm opacity-80 shrink-0">Heatmap Generated</span>
+                <span className="font-mono text-xs text-acid-lime break-all sm:text-right">{data.heatmap_file}</span>
              </div>
           )}
         </div>

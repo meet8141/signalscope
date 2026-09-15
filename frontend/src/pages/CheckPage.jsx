@@ -42,7 +42,7 @@ export function CheckPage() {
   return (
     <>
       <FullReportPrint results={results} />
-      <div className="pt-20 print:hidden">
+      <div className="pt-32 lg:pt-20 print:hidden">
         <Hero onUpload={handleUpload} isUploading={isUploading} results={results} selectedFile={selectedFile} />
         <TabbedContent results={results} />
       </div>
