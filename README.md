@@ -10,8 +10,7 @@
 
 <!-- Note: You can replace the path/to/your/video.mp4 below with the actual relative path in the repo, or an external URL to the raw video file. -->
 <div align="center">
-  <video width="600" controls autoplay muted loop playsinline mute>
-    <source src="https://www.image2url.com/r2/default/videos/1789486343625-cffb2753-b38d-47a6-832e-38b0be699244.mp4" type="video/mp4">
+  <video width="600" controls autoplay muted loop playsi    <source src="https://www.image2url.com/r2/default/videos/1789486343625-cffb2753-b38d-47a6-832e-38b0be699244.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
   <br/>
@@ -23,16 +22,16 @@
 ## 1. Core + Bonus Modules Built
 **Core Module:** Real-vs-AI-generated image classification.
 **Bonus Modules Included:**
-*   **A. Faithful Explanation:** Explanations provided via Grad-CAM visual diagnostics highlighting synthetic artifacts via feature map gradients.
-*   **C. Robustness to Degradation:** Maintained accuracy tracking across JPEG compression and resizing, supported by empirical degradation-vs-accuracy analysis.
-*   **D. Provenance & Metadata:** Built-in cryptographic authentication via C2PA manifests and EXIF hardware profiling.
-*   **F. Real-Time / Deployable:** Fully deployed web app with a React frontend and FastAPI backend.
+* Faithful Explanation:** Explanations provided via Grad-CAM visual diagnostics highlighting synthetic artifacts via feature map gradients.
+*   `Robustness to Degradation:** Maintained accuracy tracking across JPEG compression and resizing, supported by empirical degradation-vs-accuracy analysis.
+*   Provenance & Metadata:** Built-in cryptographic authentication via C2PA manifests and EXIF hardware profiling.
+*    Real-Time / Deployable:** Fully deployed web app with a React frontend and FastAPI backend.
 
 ## 2. Setup and Run Instructions (Reproducibility)
 To run the project locally and reproduce predictions in under 10 minutes:
 
 ### Backend Setup (FastAPI)
-`ash
+`Bash
 cd backend
 pip install -r ../requirements.txt
 uvicorn main:app --reload
@@ -96,6 +95,8 @@ For an in-depth understanding of the architecture, research, and technical decis
 *   [Model Training & Evaluation](docs/_Model_Training.md)
 *   [Explainability (Grad-CAM)](docs/_Explainability.md)
 *   [Limitations & Future Work](docs/_Limitations.md)
+re, and spectral analysis when provenance is inconclusive.
+
 
 ---
 
